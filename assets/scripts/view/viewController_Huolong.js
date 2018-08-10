@@ -104,28 +104,10 @@ export default class ViewController_Huolong{
                     this.view.info_backPlayerInfo_iconZhuang.node.active = true
             }
         }
-        if(winnerValue == 1)
-            winnerValue = 'A'
-        else if(winnerValue == 11)
-            winnerValue = 'J'
-        else if(winnerValue == 12)
-            winnerValue = 'Q'
-        else if(winnerValue == 13)
-            winnerValue = 'K'
-        if(winnerValue!=null){
-            this.view.info_roundInfo_nowValue.string = winnerValue
-        }
-        if(loserValue == 1)
-            loserValue = 'A'
-        else if(loserValue == 11)
-            loserValue = 'J'
-        else if(loserValue == 12)
-            loserValue = 'Q'
-        else if(loserValue == 13)
-            loserValue = 'K'
-        if(loserValue!=null){
-            this.view.info_roundInfo_loserValue.string = loserValue
-        }
+        if(winnerValue != null)
+            this.view.info_roundInfo_nowValue.string = this.view.convertValueToString(winnerValue)
+        if(loserValue != null)
+            this.view.info_roundInfo_loserValue.string = this.view.convertValueToString(loserValue)
         if(color!=null){
             let url = 'ui/unknown'
             switch(color){
@@ -305,13 +287,13 @@ export default class ViewController_Huolong{
         let retString = ""
         if(roundReportResult.areWeOldZhuang && roundReportResult.areWeNewZhuang){
             if(roundReportResult.ourNewLevel == roundReportResult.ourOldLevel){
-                retString = "平局"
+                retString = "保庄"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_GREEN
-            }else if(roundReportResult.ourNewLevel < roundReportResult.ourOldLevel){
+            }else if(roundReportResult.ourNewLevel < roundReportResult.ourOldLevel && (roundReportResult.aSuccess || roundReportResult.jSuccess)){
                 retString = "掉级"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_RED
-            }else if(roundReportResult.ourNewLevel - roundReportResult.ourOldLevel == 1){
-                retString = "连胜"
+            }else if(roundReportResult.ourNewLevel - roundReportResult.ourOldLevel == 1 || (roundReportResult.ourNewLevel == 1 && roundReportResult.ourOldLevel == 13)){
+                retString = "晋级"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_GREEN
             }else{
                 retString = "摘星"
@@ -321,19 +303,19 @@ export default class ViewController_Huolong{
             if(roundReportResult.theirNewLevel == roundReportResult.theirOldLevel){
                 retString = "丢庄"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_RED
-            }else if(roundReportResult.theirNewLevel - roundReportResult.theirOldLevel == 1){
-                retString = "败北"
+            }else if(roundReportResult.theirNewLevel - roundReportResult.theirOldLevel == 1 || (roundReportResult.theirNewLevel == 1 && roundReportResult.theirOldLevel == 13)){
+                retString = "被连抠带垮"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_RED
             }else{
-                retString = "大败"
+                retString = "被逆转摘星"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_RED
             }
         }else if(!roundReportResult.areWeOldZhuang && roundReportResult.areWeNewZhuang){
             if(roundReportResult.ourNewLevel == roundReportResult.ourOldLevel){
                 retString = "夺庄"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_GREEN
-            }else if(roundReportResult.ourNewLevel - roundReportResult.ourOldLevel == 1){
-                retString = "逆转"
+            }else if(roundReportResult.ourNewLevel - roundReportResult.ourOldLevel == 1 || (roundReportResult.ourNewLevel == 1 && roundReportResult.ourOldLevel == 13)){
+                retString = "连抠带垮"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_GREEN
             }else{
                 retString = "逆转摘星"
@@ -341,16 +323,16 @@ export default class ViewController_Huolong{
             }
         }else if(!roundReportResult.areWeOldZhuang && !roundReportResult.areWeNewZhuang){
             if(roundReportResult.theirNewLevel == roundReportResult.theirOldLevel){
-                retString = "平局"
+                retString = "干抠"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_GREEN
-            }else if(roundReportResult.theirNewLevel < roundReportResult.theirOldLevel){
+            }else if(roundReportResult.theirNewLevel < roundReportResult.theirOldLevel && (roundReportResult.aSuccess || roundReportResult.jSuccess)){
                 retString = "夺命勾"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_GREEN
-            }else if(roundReportResult.theirNewLevel - roundReportResult.theirOldLevel == 1){
-                retString = "连败"
+            }else if(roundReportResult.theirNewLevel - roundReportResult.theirOldLevel == 1 || (roundReportResult.theirNewLevel == 1 && roundReportResult.theirOldLevel == 13)){
+                retString = "败北"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_RED
             }else{
-                retString = "大败"
+                retString = "被摘星"
                 this.view.roundReportHuolong_labelWinLose.node.color = LABEL_COLOR_RED
             }
         }
@@ -363,18 +345,22 @@ export default class ViewController_Huolong{
             this.view.roundReportHuolong_labelLoserScore.node.color = LABEL_COLOR_GREEN
         else
             this.view.roundReportHuolong_labelLoserScore.node.color = LABEL_COLOR_RED
-        this.view.roundReportHuolong_labelOurOldLevel.string = roundReportResult.ourOldLevel
-        this.view.roundReportHuolong_labelOurNewLevel.string = roundReportResult.ourNewLevel
+        this.view.roundReportHuolong_labelOurOldLevel.string = this.view.convertValueToString(roundReportResult.ourOldLevel)
+        this.view.roundReportHuolong_labelOurNewLevel.string = this.view.convertValueToString(roundReportResult.ourNewLevel)
         if(roundReportResult.ourNewLevel > roundReportResult.ourOldLevel)
             this.view.roundReportHuolong_labelOurNewLevel.node.color = LABEL_COLOR_GREEN
         else
             this.view.roundReportHuolong_labelOurNewLevel.node.color = LABEL_COLOR_RED
-        this.view.roundReportHuolong_labelTheirOldLevel.string = roundReportResult.theirOldLevel
-        this.view.roundReportHuolong_labelTheirNewLevel.string = roundReportResult.theirNewLevel
+        if(roundReportResult.ourOldLevel == 1 && roundReportResult.ourNewLevel > 1)
+            this.view.roundReportHuolong_labelOurNewLevel.string = '胜利'
+        this.view.roundReportHuolong_labelTheirOldLevel.string = this.view.convertValueToString(roundReportResult.theirOldLevel)
+        this.view.roundReportHuolong_labelTheirNewLevel.string = this.view.convertValueToString(roundReportResult.theirNewLevel)
         if(roundReportResult.theirNewLevel > roundReportResult.theirOldLevel)
             this.view.roundReportHuolong_labelTheirNewLevel.node.color = LABEL_COLOR_GREEN
         else
             this.view.roundReportHuolong_labelTheirNewLevel.node.color = LABEL_COLOR_RED
+        if(roundReportResult.theirOldLevel == 1 && roundReportResult.theirNewLevel > 1)
+            this.view.roundReportHuolong_labelTheirNewLevel.string = '胜利'
         // 底牌
         this.view.roundReportHuolong_lastCards.removeAllChildren()
         let lastCardsCount = roundReportResult.lastCards.length
@@ -389,6 +375,9 @@ export default class ViewController_Huolong{
         }
 
         this.setGameInfo(0, roundReportResult.newZhuang, roundReportResult.areWeNewZhuang?roundReportResult.ourNewLevel:roundReportResult.theirNewLevel, roundReportResult.areWeNewZhuang?roundReportResult.theirNewLevel:roundReportResult.ourNewLevel )
+        this.view.showOKOnlyButton('结算', ()=>{
+            this.view.panelRoundReportHuolong.node.active = true
+        })
     }
 
     onRoundContinue(){
@@ -397,6 +386,18 @@ export default class ViewController_Huolong{
 
     onGameOver(gameReportResult){
         this.view.showTips("游戏结束, 获胜者:"+(gameReportResult.areWeWin?"我方":"敌方")+", 总局数:"+gameReportResult.roundsCount+", 即将返回开始界面")
-        Scheduler.callAfterDelay(this.view.resetToStart.bind(this.view), 5)
+        this.view.panelGameReportHuolong.node.active = true
+        this.view.gameReportHuolong_labelTotalRoundsCount.string = gameReportResult.roundsCount
+        if(gameReportResult.areWeWin){
+            this.view.gameReportHuolong_labelGameResult.string = "游戏胜利"
+            this.view.gameReportHuolong_labelGameResult.node.color = LABEL_COLOR_GREEN
+            this.view.gameReportHuolong_labelOurValue = "胜利"
+            this.view.gameReportHuolong_labelTheirValue = gameReportResult.loserLevel
+        }else{
+            this.view.gameReportHuolong_labelGameResult.string = "游戏结束"
+            this.view.gameReportHuolong_labelGameResult.node.color = LABEL_COLOR_RED
+            this.view.gameReportHuolong_labelOurValue = gameReportResult.loserLevel
+            this.view.gameReportHuolong_labelTheirValue = "胜利"
+        }
     }
 }

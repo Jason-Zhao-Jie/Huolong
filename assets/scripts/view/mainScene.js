@@ -18,6 +18,10 @@ import ViewController_Huolong from './viewController_Huolong'
 
 cc.Class({
     extends: cc.Canvas,
+    
+    editor: CC_EDITOR && {
+        executeInEditMode: true
+    },
 
     properties: {
         prefab_card:{
@@ -27,6 +31,10 @@ cc.Class({
         prefab_tips:{
             default:null,
             type:cc.Prefab
+        },
+        audio_bgm:{
+            default:null,
+            url: cc.AudioClip,
         },
         startMenu: {
             default: null,
@@ -258,7 +266,49 @@ cc.Class({
             serializable: true
         },
 
+        roundReportHuolong_btnSearchDesk: {
+            default: null,
+            type: cc.Button,
+            serializable: true
+        },
+
         roundReportHuolong_btnContinue: {
+            default: null,
+            type: cc.Button,
+            serializable: true
+        },
+
+        panelGameReportHuolong: {
+            default: null,
+            type: cc.Layout,
+            serializable: true
+        },
+
+        gameReportHuolong_labelGameResult: {
+            default: null,
+            type: cc.Label,
+            serializable: true
+        },
+
+        gameReportHuolong_labelTotalRoundsCount: {
+            default: null,
+            type: cc.Label,
+            serializable: true
+        },
+
+        gameReportHuolong_labelOurValue: {
+            default: null,
+            type: cc.Label,
+            serializable: true
+        },
+
+        gameReportHuolong_labelTheirValue: {
+            default: null,
+            type: cc.Label,
+            serializable: true
+        },
+
+        gameReportHuolong_btnBackToStart: {
             default: null,
             type: cc.Button,
             serializable: true
@@ -294,25 +344,49 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this.controller = new Controller_Huolong(this)
-        this.viewController = new ViewController_Huolong(this, this.controller)
+        if(!CC_EDITOR){
+            this.controller = new Controller_Huolong(this)
+            this.viewController = new ViewController_Huolong(this, this.controller)
 
-        this.startMenu_btnSimpleStart.node.on(cc.Node.EventType.TOUCH_END, this.onClickSimpleStart.bind(this))
-        this.startMenu_btnCreateRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickCreateRoom.bind(this))
-        this.startMenu_btnJoinRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickJoinRoom.bind(this))
-        this.startMenu_btnHistory.node.on(cc.Node.EventType.TOUCH_END, this.onClickHistory.bind(this))
-        this.startMenu_btnSetting.node.on(cc.Node.EventType.TOUCH_END, this.onClickSetting.bind(this))
-        this.roundReportHuolong_btnContinue.node.on(cc.Node.EventType.TOUCH_END, this.onClickRoundContinue.bind(this))
-        this.btnOKOnly.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
-        this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
-        this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onBtnCancel.bind(this))
+            this.startMenu_btnSimpleStart.node.on(cc.Node.EventType.TOUCH_END, this.onClickSimpleStart.bind(this))
+            this.startMenu_btnCreateRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickCreateRoom.bind(this))
+            this.startMenu_btnJoinRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickJoinRoom.bind(this))
+            this.startMenu_btnHistory.node.on(cc.Node.EventType.TOUCH_END, this.onClickHistory.bind(this))
+            this.startMenu_btnSetting.node.on(cc.Node.EventType.TOUCH_END, this.onClickSetting.bind(this))
+            this.roundReportHuolong_btnSearchDesk.node.on(cc.Node.EventType.TOUCH_END, this.onClickSearchDesk.bind(this))
+            this.roundReportHuolong_btnContinue.node.on(cc.Node.EventType.TOUCH_END, this.onClickRoundContinue.bind(this))
+            this.gameReportHuolong_btnBackToStart.node.on(cc.Node.EventType.TOUCH_END, this.resetToStart.bind(this))
+            this.btnOKOnly.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
+            this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
+            this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onBtnCancel.bind(this))
+
+            // 播放背景音乐
+            cc.audioEngine.play(this.audio_bgm, true, 50)
+        }
     },
 
     start () {
-        this.resetToStart()
+        if(!CC_EDITOR){
+            this.resetToStart()
+        }
     },
 
     update (dt) {
+    },
+
+    convertValueToString(value){
+        switch(value){            
+            case 1:
+                return 'A'
+            case 11:
+                return 'J'
+            case 12:
+                return 'Q'
+            case 13:
+                return 'K'
+            default:
+                return value+''
+        }
     },
 
     onClickSimpleStart () {
@@ -389,6 +463,10 @@ cc.Class({
         this.node.addChild(tipBar)
     },
 
+    onClickSearchDesk(){
+        this.panelRoundReportHuolong.node.active = false
+    },
+
     onClickRoundContinue(){
         this.panelRoundReportHuolong.node.active = false
         this.viewController.onRoundContinue()
@@ -404,6 +482,8 @@ cc.Class({
         this.info_backPlayerInfo_iconZhuang.node.active = false
         this.cardLayouts.node.active = false
         this.panelRoundReportHuolong.node.active = false
+        this.panelGameReportHuolong.node.active = false
+        this.clearAllThrewCards()
     },
 
     cleanBeforeAnotherRound(){

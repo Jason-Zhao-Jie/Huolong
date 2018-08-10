@@ -272,9 +272,9 @@ export default class Modal_Huolong extends ModalBase{
 
         // 将打值A更改为14 方便计算
         if(this.gamedata.groupTheir.tarValue == 1)
-            this.gamedata.groupTheir.tarValue == 14
+            this.gamedata.groupTheir.tarValue = 14
         if(this.gamedata.groupMine.tarValue == 1)
-            this.gamedata.groupMine.tarValue == 14
+            this.gamedata.groupMine.tarValue = 14
 
         // 返回值信息结构体
         let retVal = {
@@ -375,14 +375,14 @@ export default class Modal_Huolong extends ModalBase{
             }else{
                 this.gamedata.groupMine.lastZhuang = this.gamedata.curZhuang
             }
-            if(this.getLoserValue() < 11 && this.getLoserValue() + retVal.upgradingLevel > 11){
+            if(this.getCurValue() < 11 && this.getCurValue() + retVal.upgradingLevel > 11){
                 // 庄家摘星不跨J
                 if(this.getAreWeLoserNow()){
                     this.gamedata.groupTheir.tarValue = 11
                 }else{
                     this.gamedata.groupMine.tarValue = 11
                 }
-            }else if(this.getLoserValue() < 14 && this.getLoserValue() + retVal.upgradingLevel > 14){
+            }else if(this.getCurValue() < 14 && this.getCurValue() + retVal.upgradingLevel > 14){
                 // 庄家摘星不跨A
                 if(this.getAreWeLoserNow()){
                     this.gamedata.groupTheir.tarValue = 14
@@ -390,14 +390,14 @@ export default class Modal_Huolong extends ModalBase{
                     this.gamedata.groupMine.tarValue = 14
                 }
             }else{                    
-                if(this.getLoserValue() == 14 && this.getLoserValue() + retVal.upgradingLevel > 14){
+                if(this.getCurValue() == 14 && this.getCurValue() + retVal.upgradingLevel > 14){
                     // 庄家获胜, 游戏结束
                     retVal.gameover = true
                 }
                 if(this.getAreWeLoserNow()){
-                    this.gamedata.groupTheir.tarValue = this.getLoserValue() + retVal.upgradingLevel
+                    this.gamedata.groupTheir.tarValue = this.getCurValue() + retVal.upgradingLevel
                 }else{
-                    this.gamedata.groupMine.tarValue = this.getLoserValue() + retVal.upgradingLevel
+                    this.gamedata.groupMine.tarValue = this.getCurValue() + retVal.upgradingLevel
                 }
             }
         }
@@ -411,6 +411,14 @@ export default class Modal_Huolong extends ModalBase{
             this.gamedata.groupTheir.tarValue -= 13
         if(this.gamedata.groupMine.tarValue >13)
             this.gamedata.groupMine.tarValue -= 13
+        if(retVal.ourOldLevel > 13)
+            retVal.ourOldLevel -= 13
+        if(retVal.ourNewLevel > 13)
+            retVal.ourNewLevel -= 13
+        if(retVal.theirOldLevel > 13)
+            retVal.theirOldLevel -= 13
+        if(retVal.theirNewLevel > 13)
+            retVal.theirNewLevel -= 13
 
         return retVal
     }

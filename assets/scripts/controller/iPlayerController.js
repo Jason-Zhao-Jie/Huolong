@@ -105,11 +105,9 @@ export default class IPlayerController{
         let threwCards = []
         for(let i=0; i<num; ++i){
             if(i >= cards.length)
-                break
-            threwCards.push(cards[i])
-        }
-        for(let i=threwCards.length; i<num; ++i){
-            threwCards.push(otherCards[i - threwCards.length])
+                threwCards.push(otherCards[i - cards.length])
+            else
+                threwCards.push(cards[i])
         }
         Scheduler.callAfterDelay(()=>{
             this.controller.pushEvent(this.seat, CONSTANTS.PLAYERWORK.THROWCARD, threwCards)

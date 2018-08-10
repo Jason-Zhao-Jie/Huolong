@@ -11,8 +11,8 @@
       true
     ]
   ],
-  "design-resolution-height": 640,
-  "design-resolution-width": 960,
+  "design-resolution-height": 768,
+  "design-resolution-width": 1366,
   "excluded-modules": [
     "Mask",
     "ParticleSystem",
@@ -28,8 +28,10 @@
     "VideoPlayer",
     "WebView",
     "RichText",
+    "Animation",
     "MotionStreak",
     "Collider",
+    "Action",
     "Graphics",
     "DragonBones",
     "Physics",
@@ -51,6 +53,5 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }
