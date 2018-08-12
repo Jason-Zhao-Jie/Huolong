@@ -539,8 +539,8 @@ export default class Modal_Huolong extends ModalBase{
             aMin = aMin || !this.checkIsMain(cardsA[0])
             bMin = bMin || !this.checkIsMain(cardsB[0])
         }else{
-            aMin = aMin || (!this.checkIsMain(cardsA[0]) && cardsA[i].getColor() != color)
-            bMin = bMin || (!this.checkIsMain(cardsB[0]) && cardsB[i].getColor() != color)
+            aMin = aMin || (!this.checkIsMain(cardsA[0]) && cardsA[0].getColor() != color)
+            bMin = bMin || (!this.checkIsMain(cardsB[0]) && cardsB[0].getColor() != color)
         }
         if(bMin)
             return true

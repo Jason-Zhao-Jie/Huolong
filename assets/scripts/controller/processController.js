@@ -170,10 +170,13 @@ export default class ProcessController {
             }
         }
         if(this.state == CONSTANTS.GAMESTATE.GIVINGCARDS){
+            let giveCardsDelay = globalConfig.gameSettings.huolong.giveCardsDelay
+            if(this.modal.gamedata.curRound == 1)
+                giveCardsDelay = globalConfig.gameSettings.huolong.firstRoundGiveCardsDelay
             this.giveCardDelay += dt
-            if(this.giveCardDelay >= globalConfig.gameSettings.huolong.giveCardDelay){
+            if(this.giveCardDelay >= giveCardsDelay){
                 this.giveACard()
-                this.giveCardDelay -= globalConfig.gameSettings.huolong.giveCardDelay
+                this.giveCardDelay -= giveCardsDelay
             }
         }
         return msg

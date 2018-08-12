@@ -5,7 +5,8 @@ export default {
     gameSettings:{
         huolong:{
             groupNum : 3,
-            giveCardDelay : 0.2,
+            firstRoundGiveCardsDelay : 0.2,
+            giveCardsDelay : 0.02,
             aroundOverDelay : 1.5,
             aroundAIDelay : 0.5,
         }
