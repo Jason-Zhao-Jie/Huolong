@@ -10,32 +10,32 @@
   "inlineSpriteFrames_native": true,
   "jailbreakPlatform": false,
   "md5Cache": false,
-  "mergeStartScene": false,
+  "mergeStartScene": true,
   "oauthLoginServer": "",
-  "optimizeHotUpdate": true,
+  "optimizeHotUpdate": false,
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.NewProject",
+  "packageName": "org.cocos2d.wechatOpenDataProject",
   "privateKey": "",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
-  "renderMode": "0",
-  "startScene": "aa9362db-c748-479d-b836-f7527afebf09",
-  "title": "Huolong",
-  "webOrientation": "auto",
+  "renderMode": "1",
+  "startScene": "86ac5d2e-e255-4369-b62f-6f1e6f84301e",
+  "title": "wechatOpenDataProject",
+  "webOrientation": "landscape",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
-    "appid": "wx1fb487b3319eb6ec",
-    "isSubdomain": false,
-    "orientation": "landscape",
-    "subContext": "wechatOpenDataProject"
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": true,
+    "orientation": "portrait",
+    "subContext": ""
   },
-  "xxteaKey": "5cb71cd1-59b4-4a",
+  "xxteaKey": "6e03f1ab-d39a-47",
   "zipCompressJs": true
 }

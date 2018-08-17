@@ -1,6 +1,6 @@
 import loadSpriteFrame from '../controller/spriteFrameLoader'
-import Card from '../data/card/card'
-import CONSTANTS from '../config/constants';
+import Card from '../data/card'
+import CONSTANTS from '../config/constants'
 
 let BtnCard = cc.Class({
     extends: cc.Button,

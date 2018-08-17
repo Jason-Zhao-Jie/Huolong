@@ -1,5 +1,5 @@
-import CardManager from './card/cardManager'
-import CardLayoutData from './card/cardLayoutData'
+import CardManager from './cardManager'
+import CardLayoutData from './cardLayoutData'
 import CONSTANTS from '../config/constants'
 
 class ModalBase{

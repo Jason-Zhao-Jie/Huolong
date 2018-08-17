@@ -1,4 +1,4 @@
-import Constants from '../../config/constants'
+import Constants from '../config/constants'
 
 const CARD_IMG_DIR = 'cards/'
 
@@ -83,7 +83,7 @@ Card.getColor = (id)=>{
 }
 
 Card.getGroup = (id)=>{
-  return math.floor(id / 1000)
+  return Math.floor(id / 1000)
 }
 
 Card.getValue = (id)=>{

@@ -1,6 +1,6 @@
 import CONSTANTS from '../../config/constants'
 import ArrayUtils from '../../utils/arrayUtils'
-import ModalBase from '../modalBase'
+import ModalBase from '../../data/modalBase'
 
 export default class Modal_Huolong extends ModalBase{
     constructor(){
@@ -238,13 +238,13 @@ export default class Modal_Huolong extends ModalBase{
     setAroundOver(){
         this.roundData.throwHistory.push(this.roundData.currentThrews)
         let seat = this.roundData.currentFirstThrowPlayer
-        if(!this.checkCards(this.roundData.currentThrews[seat], this.roundData.currentThrews[this.getNextOfSeat(this.roundData.currentFirstThrowPlayer)], this.roundData.currentShowedCardColor)){
+        if(!this.checkCards(this.roundData.currentThrews[seat], this.roundData.currentThrews[this.getNextOfSeat(this.roundData.currentFirstThrowPlayer)])){
             seat = this.getNextOfSeat(this.roundData.currentFirstThrowPlayer)
         }
-        if(!this.checkCards(this.roundData.currentThrews[seat], this.roundData.currentThrews[this.getFriendOfSeat(this.roundData.currentFirstThrowPlayer)], this.roundData.currentShowedCardColor)){
+        if(!this.checkCards(this.roundData.currentThrews[seat], this.roundData.currentThrews[this.getFriendOfSeat(this.roundData.currentFirstThrowPlayer)])){
             seat = this.getFriendOfSeat(this.roundData.currentFirstThrowPlayer)
         }
-        if(!this.checkCards(this.roundData.currentThrews[seat], this.roundData.currentThrews[this.getBackOfSeat(this.roundData.currentFirstThrowPlayer)], this.roundData.currentShowedCardColor)){
+        if(!this.checkCards(this.roundData.currentThrews[seat], this.roundData.currentThrews[this.getBackOfSeat(this.roundData.currentFirstThrowPlayer)])){
             seat = this.getBackOfSeat(this.roundData.currentFirstThrowPlayer)
         }
         let allCards = ArrayUtils.mix(this.roundData.currentThrews[CONSTANTS.PLAYERSEAT.SELF],
@@ -522,11 +522,11 @@ export default class Modal_Huolong extends ModalBase{
         }
     }
 
-    // 比较两组牌(牌数一样, 可为1张或多张)的大小. 
+    // 比较两组牌(牌数一样, 可为1张或多张)的大小. 若A胜, 则返回true
     // 组牌内牌不是完全一样, 则为最小; 不为主牌且不同于要求的颜色, 也为最小
     // 有一个最小, 则最小者败; 同不为最小, 则按单张比较结果计算
     // 同为最小, 则A胜; 同不为最小但值相等, 也是A胜
-    checkCards(cardsA, cardsB, color){
+    checkCards(cardsA, cardsB, color = null){
         let aMin = false
         let bMin = false
         for(let i=1; i<cardsA.length; ++i){
@@ -534,6 +534,9 @@ export default class Modal_Huolong extends ModalBase{
                 aMin = true
             if(cardsB[i].getColor()!=cardsB[i-1].getColor() || cardsB[i].getValue()!=cardsB[i-1].getValue())
                 bMin = true
+        }
+        if(!color){
+            color = this.roundData.currentShowedCardColor
         }
         if(color==CONSTANTS.CARDCOLOR.MAIN){
             aMin = aMin || !this.checkIsMain(cardsA[0])

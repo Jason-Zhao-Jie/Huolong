@@ -1,8 +1,7 @@
-import CONSTANTS from '../config/constants'
-import BtnCard from './btnCard'
-import Card from '../data/card/card'
-import loadSpriteFrame from '../controller/spriteFrameLoader'
-import Scheduler from '../utils/scheduler'
+import CONSTANTS from '../../config/constants'
+import BtnCard from '../../view/btnCard'
+import Card from '../../data/card'
+import loadSpriteFrame from '../../controller/spriteFrameLoader'
 
 const MAX_LINE_CARDS = 28
 const LABEL_COLOR_RED = new cc.Color(240, 8, 8)
@@ -377,11 +376,13 @@ export default class ViewController_Huolong{
         this.setGameInfo(0, roundReportResult.newZhuang, roundReportResult.areWeNewZhuang?roundReportResult.ourNewLevel:roundReportResult.theirNewLevel, roundReportResult.areWeNewZhuang?roundReportResult.theirNewLevel:roundReportResult.ourNewLevel )
         this.view.showOKOnlyButton('结算', ()=>{
             this.view.panelRoundReportHuolong.node.active = true
+            return true
         })
     }
 
     onRoundContinue(){
         this.controller.pushEvent(CONSTANTS.PLAYERSEAT.SELF, CONSTANTS.PLAYERWORK.ROUNDREADY)
+        this.view.closeOKCancelButtons()
     }
 
     onGameOver(gameReportResult){

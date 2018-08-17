@@ -1,6 +1,6 @@
 import CONSTANTS from '../config/constants'
 import ModalBase from 'modalBase'
-import Modal_Huolong from './card_huolong/modal_huolong'
+import Modal_Huolong from '../case_huolong/data/modal_huolong'
 
 export default function(gameType){
     switch(gameType){

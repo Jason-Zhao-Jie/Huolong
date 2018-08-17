@@ -1,8 +1,8 @@
-import CONSTANTS from '../config/constants'
-import globalConfig from '../config/globalConfig'
-import ProcessController from './processController'
-import Card from '../data/card/card'
-import Scheduler from '../utils/scheduler'
+import CONSTANTS from '../../config/constants'
+import globalConfig from '../../config/globalConfig'
+import ProcessController from '../../controller/processController'
+import Card from '../../data/card'
+import Scheduler from '../../utils/scheduler'
 
 export default class Controller_Huolong extends ProcessController {
     constructor(mainscene){
@@ -155,6 +155,10 @@ export default class Controller_Huolong extends ProcessController {
         let now = this.modal.roundData.currentNeedThrowPlayer
         let next = this.modal.setAroundStepOn(cards)
         this.view.viewController.onAroundStepOn(now, cards)
+        this.nextPlayer.pushEvent(CONSTANTS.PLAYEREVENT.PLAYERTHREWCARD, {seat:now, cards:cards})
+        this.friendPlayer.pushEvent(CONSTANTS.PLAYEREVENT.PLAYERTHREWCARD, {seat:now, cards:cards})
+        this.backPlayer.pushEvent(CONSTANTS.PLAYEREVENT.PLAYERTHREWCARD, {seat:now, cards:cards})
+        this.localPlayer.pushEvent(CONSTANTS.PLAYEREVENT.PLAYERTHREWCARD, {seat:now, cards:cards})
         if(null == next)
             this.aroundOver()
         else
@@ -244,7 +248,16 @@ export default class Controller_Huolong extends ProcessController {
     
     onThrowCards(playerSeat, cards){
         if(this.modal.roundData.currentNeedThrowPlayer == playerSeat){
+            cc.log("出牌轮次:"+this.modal.getRoundIndex()+", 出牌者:"+playerSeat.toString()+", 出牌内容:")
+            for(let i=0; i<cards.length; ++i){
+                if(!cards[i])
+                    cc.error("出牌数据错误: 第"+i+"张牌是空牌")
+                else
+                    cc.log("    颜色:"+cards[i].getColor().toString()+", 值:"+cards[i].getValue()+", 牌组:"+cards[i].getGroup())
+            }
             this.aroundStepOn(cards)
-        }        
+        }else{
+            cc.log("出牌次序发生错误, 应出牌者:"+this.modal.roundData.currentNeedThrowPlayer.toString()+", 实出牌者:"+playerSeat.toString())
+        }
     }
 }

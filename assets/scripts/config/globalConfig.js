@@ -3,6 +3,7 @@ import CONSTANTS from './constants'
 export default {
     debugLevel:CONSTANTS.DEBUGLEVEL.DEBUG,
     gameSettings:{
+        musicVolumn:50,
         huolong:{
             groupNum : 3,
             firstRoundGiveCardsDelay : 0.2,

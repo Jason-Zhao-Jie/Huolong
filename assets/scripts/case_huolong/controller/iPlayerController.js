@@ -1,6 +1,6 @@
-import CONSTANTS from '../config/constants'
-import Scheduler from '../utils/scheduler'
-import globalConfig from '../config/globalConfig'
+import CONSTANTS from '../../config/constants'
+import Scheduler from '../../utils/scheduler'
+import globalConfig from '../../config/globalConfig'
 
 export default class IPlayerController{
     constructor(controller){
@@ -21,6 +21,10 @@ export default class IPlayerController{
 
     getCardLayoutData(){
         return this.controller.modal.getPlayerCardData(this.seat)
+    }
+
+    getCardsByIndexes(cardsIndexes){
+        return this.getCardLayoutData().getCardsByIndexes(cardsIndexes)
     }
 
     pushEvent(event, data){
@@ -49,6 +53,9 @@ export default class IPlayerController{
                     break
                 case CONSTANTS.PLAYEREVENT.ASKFORTHROW:
                     this.onAskForThrow(msg.data.color, msg.data.num)
+                    break
+                case CONSTANTS.PLAYEREVENT.PLAYERTHREWCARD:
+                    this.onPlayerThrewCard(msg.data.seat, msg.data.cards)
                     break
                 case CONSTANTS.PLAYEREVENT.ROUNDREPORT:
                     this.onRoundOver(msg.data)
@@ -112,6 +119,10 @@ export default class IPlayerController{
         Scheduler.callAfterDelay(()=>{
             this.controller.pushEvent(this.seat, CONSTANTS.PLAYERWORK.THROWCARD, threwCards)
         }, globalConfig.gameSettings.huolong.aroundAIDelay)
+    }
+
+    onPlayerThrewCard(seat, cards){
+
     }
 
     onRoundOver(reportData){

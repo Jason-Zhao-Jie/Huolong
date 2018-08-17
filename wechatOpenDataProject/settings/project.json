@@ -11,8 +11,8 @@
       true
     ]
   ],
-  "design-resolution-height": 768,
-  "design-resolution-width": 1366,
+  "design-resolution-height": 640,
+  "design-resolution-width": 1136,
   "excluded-modules": [
     "Mask",
     "CCSpriteDistortion",
@@ -21,19 +21,24 @@
     "TiledMap",
     "Spine Skeleton",
     "Widget",
+    "Button",
     "ProgressBar",
     "ScrollBar",
     "ScrollView",
     "Toggle",
     "PageView",
     "PageViewIndicator",
+    "Slider",
+    "EditorBox",
     "VideoPlayer",
     "WebView",
     "RichText",
+    "AudioSource",
     "Animation",
     "MotionStreak",
     "Collider",
     "Action",
+    "Audio",
     "Graphics",
     "DragonBones",
     "Physics",
@@ -49,12 +54,12 @@
   "group-list": [
     "default"
   ],
-  "simulator-orientation": true,
+  "simulator-orientation": false,
   "simulator-resolution": {
     "height": 640,
-    "width": 1136
+    "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": true,
+  "use-project-simulator-setting": false,
   "start-scene": "current"
 }

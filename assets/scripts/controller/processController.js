@@ -1,15 +1,17 @@
 import CONSTANTS from '../config/constants'
 import createModal from '../data/createModal'
-import iPlayerController from './iPlayerController'
-import PlayerController_Local from './playerController_local'
+import PlayerController_Robot from '../case_huolong/controller/playerController_robot'
+import PlayerController_Local from '../case_huolong/controller/playerController_local'
 import Scheduler from '../utils/scheduler'
-import globalConfig from '../config/globalConfig';
+import globalConfig from '../config/globalConfig'
+import ServiceBus from './serviceBus'
 
 export default class ProcessController {
     constructor(mainscene, gameType){
         this.view = mainscene
         this.modal = createModal(gameType)
         this.state = CONSTANTS.GAMESTATE.START
+        this.serviceBus = new ServiceBus(this)
         
         this.messageQueue = []
         this.roundReadyList = {}
@@ -20,11 +22,11 @@ export default class ProcessController {
 
         this.localPlayer = new PlayerController_Local(this)
         this.localPlayer.setSeat(CONSTANTS.PLAYERSEAT.SELF)
-        this.nextPlayer = new iPlayerController(this)
+        this.nextPlayer = new PlayerController_Robot(this)
         this.nextPlayer.setSeat(CONSTANTS.PLAYERSEAT.NEXT)
-        this.friendPlayer = new iPlayerController(this)
+        this.friendPlayer = new PlayerController_Robot(this)
         this.friendPlayer.setSeat(CONSTANTS.PLAYERSEAT.FRIEND)
-        this.backPlayer = new iPlayerController(this)
+        this.backPlayer = new PlayerController_Robot(this)
         this.backPlayer.setSeat(CONSTANTS.PLAYERSEAT.BACK)
 
         this.giveCardDelay = 0
@@ -151,6 +153,12 @@ export default class ProcessController {
     pushEvent(playerSeat, event, data = null){
         this.messageQueue.push({playerSeat:playerSeat, event:event, data:data})
         cc.log("controller收到事件: "+event.toString()+"座位:"+playerSeat.toString())
+        if(event == CONSTANTS.PLAYERWORK.THROWCARD){
+            for(let i=0; i<data.length; ++i){
+                if(!data[i])
+                    cc.error("出牌数据错误: 第"+i+"张牌是空牌")
+            }
+        }
     }
 
     update(dt){

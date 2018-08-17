@@ -9,11 +9,12 @@
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
 import CONSTANTS from '../config/constants'
+import globalConfig from '../config/globalConfig'
 import ProcessController from '../controller/processController'
-import Controller_Huolong from '../controller/controller_huolong'
+import Controller_Huolong from '../case_huolong/controller/controller_huolong'
 import BtnCard from './btnCard'
 import TipBar from './tipBar'
-import ViewController_Huolong from './viewController_Huolong'
+import ViewController_Huolong from '../case_huolong/view/viewController_Huolong'
 
 
 cc.Class({
@@ -106,6 +107,16 @@ cc.Class({
             type: cc.Sprite,
             serializable: true
         },
+        info_myPlayerInfo_head:{
+            default: null,
+            type: cc.Sprite,
+            serializable: true
+        },
+        info_myPlayerInfo_labelName:{
+            default: null,
+            type: cc.Label,
+            serializable: true
+        },
         info_nextPlayerInfo:{
             default: null,
             type: cc.Layout,
@@ -132,6 +143,11 @@ cc.Class({
             serializable: true
         },
         info_backPlayerInfo_iconZhuang:{
+            default: null,
+            type: cc.Sprite,
+            serializable: true
+        },
+        info_sharedCanvasRenderer:{
             default: null,
             type: cc.Sprite,
             serializable: true
@@ -314,9 +330,41 @@ cc.Class({
             serializable: true
         },
 
+        settingPanel: {
+            default: null,
+            type: cc.Layout,
+            serializable: true
+        },
+
+        setting_sliderMusicVolumn: {
+            default: null,
+            type: cc.Slider,
+            serializable: true
+        },
+
+        setting_sliderMusicVolumn_btnBar: {
+            default: null,
+            type: cc.Button,
+            serializable: true
+        },
+
+        setting_btnSaveClose: {
+            default: null,
+            type: cc.Button,
+            serializable: true
+        },
+
         controller:{
             default: null,
             type: ProcessController
+        },
+
+        userCode:{
+            default:""
+        },
+
+        bgmId:{
+            default: 0,
         },
 
         myCards:{
@@ -359,19 +407,107 @@ cc.Class({
             this.btnOKOnly.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onBtnCancel.bind(this))
+            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_END, this.onMusicVolumnChange.bind(this))
+            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_MOVE, this.onMusicVolumnChange.bind(this))
+            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onMusicVolumnChange.bind(this))
+            this.setting_btnSaveClose.node.on(cc.Node.EventType.TOUCH_END, this.onSaveSettings.bind(this))
 
-            // 播放背景音乐
-            cc.audioEngine.play(this.audio_bgm, true, 50)
+            // 播放背景音乐, 因包体积过大, 暂时去掉背景音乐
+            // this.bgmId = cc.audioEngine.play(this.audio_bgm, true, globalConfig.gameSettings.musicVolumn)
         }
     },
 
     start () {
         if(!CC_EDITOR){
             this.resetToStart()
+            
+            this.wechatLogin()
         }
     },
 
     update (dt) {
+        this.renderWechatSharedCanvas()
+    },
+
+    checkIsWechatGamePlatform(){
+        return typeof wx != 'undefined'
+    },
+
+    wechatLogin(){
+        if(this.checkIsWechatGamePlatform())
+            this.hideUserInfo(CONSTANTS.PLAYERSEAT.SELF)
+            wx.login({
+                success: (code) =>{
+                    this.userCode = code
+                    wx.getUserInfo({
+                        withCredentials:false,  // 目前暂时不需要获取用户敏感信息
+                        lang:"zh_CN",
+                        success: (res)=>{
+                            if(!res.userInfo){
+                                this.showTips("获取微信用户信息成功, 但是没有任何数据, 现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
+                                this.sendMsgToWxSharedCanvas({
+                                    command:"pleaseShowUserInfo",
+                                    reason:"getUserInfo succeed, but nothing returned"
+                                })
+                            }else
+                                this.showUserInfo(CONSTANTS.PLAYERSEAT.SELF, res.userInfo.nickName, res.userInfo.avatarUrl)
+                        },
+                        fail: (res)=>{
+                            // iOS 和 Android 对于拒绝授权的回调 errMsg 没有统一，需要做一下兼容处理
+                            if (res.errMsg.indexOf('auth deny') > -1 || 	res.errMsg.indexOf('auth denied') > -1 ) {
+                                // 处理用户拒绝授权的情况
+                                this.showTips("拒绝授权, 将不能进行联机游戏, 如需重新允许, 请点击右上角菜单中的设置")
+                            }else{
+                                let errStr = ""
+                                for(let i=0; i<res.errMsg.length;++i){
+                                    errStr+=res.errMsg[i]+"  "
+                                }
+                                this.showTips("授权失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
+                                this.sendMsgToWxSharedCanvas({
+                                    command:"pleaseShowUserInfo",
+                                    reason:"getUserInfo failed, because of the program is in developing"
+                                })
+                            }
+                        },
+                        complete:()=>{
+                            this.renderWechatSharedCanvas()
+                        }
+                      }
+                    )
+                },
+                fail: (res)=> {
+                    let errStr = ""
+                    for(let i=0; i<res.errMsg.length;++i){
+                        errStr+=res.errMsg[i]+"  "
+                    }
+                    this.showTips("微信登录失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
+                    this.sendMsgToWxSharedCanvas({
+                        command:"pleaseShowUserInfo",
+                        reason:"login failed"
+                    })
+                    this.renderWechatSharedCanvas()
+                },
+                complete:()=>{
+                }
+            })
+    },
+
+    renderWechatSharedCanvas(){
+        if(this.checkIsWechatGamePlatform()){
+            let openDataContext = wx.getOpenDataContext()
+            let sharedCanvas = openDataContext.canvas
+            let tex = new cc.Texture2D()
+            tex.initWithElement(sharedCanvas);
+            tex.handleLoadedTexture();
+            this.info_sharedCanvasRenderer.spriteFrame = new cc.SpriteFrame(tex);
+        }
+    },
+
+    sendMsgToWxSharedCanvas(msgData){
+        if(this.checkIsWechatGamePlatform()){
+            let openDataContext = wx.getOpenDataContext()
+            openDataContext.postMessage(msgData)
+        }
     },
 
     convertValueToString(value){
@@ -389,25 +525,65 @@ cc.Class({
         }
     },
 
+    showUserInfo(seat, nickName, headUrl){
+        let headTexture = new cc.Texture2D()
+        headTexture.url = headUrl
+        switch(seat){
+            case CONSTANTS.PLAYERSEAT.SELF:
+                this.info_myPlayerInfo.node.active = true
+                this.info_myPlayerInfo_head.spriteFrame = new cc.SpriteFrame(headTexture)
+                this.info_myPlayerInfo_labelName.string = nickName
+                break
+            case CONSTANTS.PLAYERSEAT.NEXT:
+                this.info_nextPlayerInfo.node.active = true
+                break
+            case CONSTANTS.PLAYERSEAT.FRIEND:
+                this.info_friendPlayerInfo.node.active = true
+                break
+            case CONSTANTS.PLAYERSEAT.BACK:
+                this.info_backPlayerInfo.node.active = true
+                break
+        }
+    },
+
+    hideUserInfo(seat){
+        switch(seat){
+            case CONSTANTS.PLAYERSEAT.SELF:
+                this.info_myPlayerInfo.node.active = false
+                break
+            case CONSTANTS.PLAYERSEAT.NEXT:
+                this.info_nextPlayerInfo.node.active = false
+                break
+            case CONSTANTS.PLAYERSEAT.FRIEND:
+                this.info_friendPlayerInfo.node.active = false
+                break
+            case CONSTANTS.PLAYERSEAT.BACK:
+                this.info_backPlayerInfo.node.active = false
+                break
+        }
+
+    },
+
     onClickSimpleStart () {
         this.startMenu.node.active = false
         this.viewController.reset()
     },
 
     onClickCreateRoom () {
-
+        this.showTips('联网对战服务器正在建设中, 敬请期待')
     },
 
     onClickJoinRoom () {
-
+        this.showTips('联网对战服务器正在建设中, 敬请期待')
     },
 
     onClickHistory () {
-
+        this.showTips('联网对战服务器正在建设中, 敬请期待')
     },
 
     onClickSetting () {
-
+        this.setting_sliderMusicVolumn.progress = globalConfig.gameSettings.musicVolumn / 100
+        this.settingPanel.node.active = true
     },
 
     // 确定按钮回调
@@ -472,9 +648,19 @@ cc.Class({
         this.viewController.onRoundContinue()
     },
 
+    onMusicVolumnChange(){
+        cc.audioEngine.setVolume(this.bgmId, this.setting_sliderMusicVolumn.progress * 100)
+    },
+
+    onSaveSettings(){
+        globalConfig.gameSettings.musicVolumn = this.setting_sliderMusicVolumn.progress * 100
+        this.settingPanel.node.active = false
+    },
+
     // 回到开始菜单
     resetToStart () {
         this.startMenu.node.active = true
+        this.settingPanel.node.active = false
         this.infoUI.node.active = false
         this.info_myPlayerInfo_iconZhuang.node.active = false
         this.info_nextPlayerInfo_iconZhuang.node.active = false
@@ -616,7 +802,7 @@ cc.Class({
     },
 
     onClickHelp(){
-        return this.viewController.onClickHelp(sels)
+        return this.viewController.onClickHelp()
     },
 
 });

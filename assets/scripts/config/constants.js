@@ -65,6 +65,14 @@ const CONSTANTS = Object.freeze({
     CARDSGET:Symbol('cardsGet'), // 发送摸牌完毕确认 (确认后不能再发送 SHOWSTAR)
     THROWLASTCARDS:Symbol('throwLastCards'), // 发送扣底牌 (包括摘星)
     THROWCARD:Symbol('throwCard'), // 出牌
+  },
+  AIGETCARDSWAY:{
+    MINWITHOUTSCORE:Symbol('minWithoutScore'),  // 溜牌, 排除分数, 除非只剩分数
+    MINORSCOREKILL:Symbol('minOrScoreKill'),  // 尽量无分溜, 如只剩分,尝试大. 如无此花色只剩主或分,则分杀
+    SCOREFIRSTMINTHEN:Symbol('scoreFirstMinThen'),  // 优先加分, 无分溜小牌, 不破流星
+    MINKILL:Symbol('minKill'),            // 仅使用最小杀, 不用王牌
+    SCOREKILL:Symbol('scoreKill'),        // 优先使用分杀, 不用王牌
+    CAUTIOUSKILL:Symbol('cautiousKill'),  // 谨慎杀, 最小使用A或更大, 可用王牌
   }
 })
 

@@ -1,5 +1,5 @@
-import IPlayerController from 'iPlayerController'
-import CONSTANTS from '../config/constants'
+import IPlayerController from './iPlayerController'
+import CONSTANTS from '../../config/constants'
 
 export default class PlayerController_Local extends IPlayerController{
     constructor(controller){
@@ -8,10 +8,6 @@ export default class PlayerController_Local extends IPlayerController{
 
     getType(){
         return CONSTANTS.PLAYERTYPE.LOCAL
-    }
-
-    getCardsByIndexes(cardsIndexes){
-        return this.getCardLayoutData().getCardsByIndexes(cardsIndexes)
     }
 
     sendSetLastCards(cardsIndexes){
