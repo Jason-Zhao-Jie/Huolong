@@ -8,6 +8,8 @@
 //  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
 
+import loader from './loader'
+
 if(!CC_EDITOR && typeof wx == 'undefined'){
     cc.error("这是微信小游戏的开放数据域, 请在微信小游戏中运行")
 }
@@ -59,12 +61,12 @@ cc.Class({
         wx.getUserInfo({
             lang:"zh_CN", 
             success:(res)=>{
-                let headTexture = new cc.Texture2D()
-                headTexture.url = res.userInfo.avatarUrl
-                this.myHead.node.active = true
-                this.myHead.spriteFrame = new cc.SpriteFrame(headTexture)
-                this.myNickname.node.active = true
-                this.myNickname.string = res.userInfo.nickName
+                loader.loadImgTextureFromUrl(res.userInfo.avatarUrl, (texture)=>{
+                    this.myHead.node.active = true
+                    this.myHead.spriteFrame = new cc.SpriteFrame(texture)
+                    this.myNickname.node.active = true
+                    this.myNickname.string = res.userInfo.nickName
+                })
                 cc.log("获取微信用户信息成功!")
             }, 
             fail:()=>{

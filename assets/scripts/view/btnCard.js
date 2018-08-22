@@ -1,4 +1,4 @@
-import loadSpriteFrame from '../controller/spriteFrameLoader'
+import loader from '../utils/loader'
 import Card from '../data/card'
 import CONSTANTS from '../config/constants'
 
@@ -60,7 +60,7 @@ let BtnCard = cc.Class({
     setCard(id, imgSrc){
         this.id = id
         this.node.active = false
-        loadSpriteFrame(imgSrc, (sp)=>{
+        loader.loadSpriteFrame(imgSrc, (sp)=>{
             this.normalSprite = sp
             this.pressedSprite = sp
             this.hoverSprite = sp

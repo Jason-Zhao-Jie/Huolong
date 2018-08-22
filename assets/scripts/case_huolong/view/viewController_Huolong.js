@@ -1,7 +1,7 @@
 import CONSTANTS from '../../config/constants'
 import BtnCard from '../../view/btnCard'
 import Card from '../../data/card'
-import loadSpriteFrame from '../../controller/spriteFrameLoader'
+import loader from '../../utils/loader'
 
 const MAX_LINE_CARDS = 28
 const LABEL_COLOR_RED = new cc.Color(240, 8, 8)
@@ -123,7 +123,7 @@ export default class ViewController_Huolong{
                     url = 'ui/d'
                     break
             }
-            loadSpriteFrame(url, (sp)=>{
+            loader.loadSpriteFrame(url, (sp)=>{
                 this.view.info_roundInfo_nowColor.spriteFrame = sp
             })
         }

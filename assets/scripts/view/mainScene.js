@@ -15,6 +15,7 @@ import Controller_Huolong from '../case_huolong/controller/controller_huolong'
 import BtnCard from './btnCard'
 import TipBar from './tipBar'
 import ViewController_Huolong from '../case_huolong/view/viewController_Huolong'
+import loader from '../utils/loader';
 
 
 cc.Class({
@@ -526,24 +527,24 @@ cc.Class({
     },
 
     showUserInfo(seat, nickName, headUrl){
-        let headTexture = new cc.Texture2D()
-        headTexture.url = headUrl
-        switch(seat){
-            case CONSTANTS.PLAYERSEAT.SELF:
-                this.info_myPlayerInfo.node.active = true
-                this.info_myPlayerInfo_head.spriteFrame = new cc.SpriteFrame(headTexture)
-                this.info_myPlayerInfo_labelName.string = nickName
-                break
-            case CONSTANTS.PLAYERSEAT.NEXT:
-                this.info_nextPlayerInfo.node.active = true
-                break
-            case CONSTANTS.PLAYERSEAT.FRIEND:
-                this.info_friendPlayerInfo.node.active = true
-                break
-            case CONSTANTS.PLAYERSEAT.BACK:
-                this.info_backPlayerInfo.node.active = true
-                break
-        }
+        loader.loadImgTextureFromUrl(headUrl, (texture)=>{
+            switch(seat){
+                case CONSTANTS.PLAYERSEAT.SELF:
+                    this.info_myPlayerInfo.node.active = true
+                    this.info_myPlayerInfo_head.spriteFrame = new cc.SpriteFrame(texture)
+                    this.info_myPlayerInfo_labelName.string = nickName
+                    break
+                case CONSTANTS.PLAYERSEAT.NEXT:
+                    this.info_nextPlayerInfo.node.active = true
+                    break
+                case CONSTANTS.PLAYERSEAT.FRIEND:
+                    this.info_friendPlayerInfo.node.active = true
+                    break
+                case CONSTANTS.PLAYERSEAT.BACK:
+                    this.info_backPlayerInfo.node.active = true
+                    break
+            }
+        })
     },
 
     hideUserInfo(seat){
