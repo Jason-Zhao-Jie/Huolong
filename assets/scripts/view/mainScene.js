@@ -431,11 +431,11 @@ cc.Class({
     },
 
     checkIsWechatGamePlatform(){
-        return typeof wx != 'undefined'
+        return (typeof wx) != 'undefined'
     },
 
     wechatLogin(){
-        if(this.checkIsWechatGamePlatform())
+        if(this.checkIsWechatGamePlatform()){
             this.hideUserInfo(CONSTANTS.PLAYERSEAT.SELF)
             wx.login({
                 success: (code) =>{
@@ -491,6 +491,7 @@ cc.Class({
                 complete:()=>{
                 }
             })
+        }
     },
 
     renderWechatSharedCanvas(){

@@ -1,3 +1,8 @@
+// 项目报错时, 执行以下替换:
+// 字符串 require('google-protobuf替换为require('db://assets/scripts/protocol/google-protobuf
+// 字符串 require('google-protobuf')替换为require('db://assets/scripts/protocol/google-protobuf')
+
+
 let loadedList = {
 
 }

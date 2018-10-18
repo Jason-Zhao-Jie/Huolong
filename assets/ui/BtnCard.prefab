@@ -131,29 +131,19 @@
       "b": 124,
       "a": 255
     },
-    "_N$normalSprite": {
-      "__uuid__": "d5b812c6-5723-4ef4-9df0-2e4f3c667d30"
-    },
-    "_N$pressedSprite": {
-      "__uuid__": "d5b812c6-5723-4ef4-9df0-2e4f3c667d30"
-    },
-    "pressedSprite": {
-      "__uuid__": "d5b812c6-5723-4ef4-9df0-2e4f3c667d30"
-    },
-    "_N$hoverSprite": {
-      "__uuid__": "d5b812c6-5723-4ef4-9df0-2e4f3c667d30"
-    },
-    "hoverSprite": {
-      "__uuid__": "d5b812c6-5723-4ef4-9df0-2e4f3c667d30"
-    },
-    "_N$disabledSprite": {
-      "__uuid__": "d5b812c6-5723-4ef4-9df0-2e4f3c667d30"
-    },
+    "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
+    "_N$disabledSprite": null,
     "_N$target": {
       "__id__": 1
     },
     "value": 0,
-    "color": null
+    "id": 0,
+    "enabledClick": false,
+    "clicked": false
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -10,7 +10,7 @@ export default class SocketService{
             return false
         if(!serverURI)
             return false
-        //this.socket = io.connect(serverURI)
+        this.socket = new WebSocket(serverURI)
         return true
     }
     
