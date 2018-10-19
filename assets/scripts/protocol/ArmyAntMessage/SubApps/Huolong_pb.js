@@ -7,7 +7,7 @@
  */
 // GENERATED CODE -- DO NOT EDIT!
 
-var jspb = require('db://assets/scripts/protocol/google-protobuf');
+ 
 var goog = jspb;
 var global = Function('return this')();
 

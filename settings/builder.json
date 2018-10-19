@@ -30,7 +30,7 @@
   "title": "Huolong",
   "webOrientation": "auto",
   "wechatgame": {
-    "REMOTE_SERVER_ROOT": "",
+    "REMOTE_SERVER_ROOT": "ws://127.0.0.1:8080",
     "appid": "wx1fb487b3319eb6ec",
     "isSubdomain": false,
     "orientation": "landscape",

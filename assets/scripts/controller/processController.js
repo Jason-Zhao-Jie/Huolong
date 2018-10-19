@@ -1,13 +1,19 @@
 import CONSTANTS from '../config/constants'
 import createModal from '../data/createModal'
-import PlayerController_Robot from '../case_huolong/controller/playerController_robot'
 import PlayerController_Local from '../case_huolong/controller/playerController_local'
+import PlayerController_Robot from '../case_huolong/controller/playerController_robot'
+import PlayerController_Network from '../case_huolong/controller/playerController_network'
 import Scheduler from '../utils/scheduler'
 import globalConfig from '../config/globalConfig'
 import ServiceBus from './serviceBus'
 
 export default class ProcessController {
-    constructor(mainscene, gameType){
+    /**
+     * @param {cc.Canvas} mainscene 
+     * @param {CONSTANTS.GAMETYPE} gameType 
+     * @param {CONSTANTS.PLAYERTYPE} hostType 
+     */
+    constructor(mainscene, gameType, hostType){
         this.view = mainscene
         this.modal = createModal(gameType)
         this.state = CONSTANTS.GAMESTATE.START
@@ -20,17 +26,43 @@ export default class ProcessController {
         this.roundReadyList[CONSTANTS.PLAYERSEAT.FRIEND] = false
         this.roundReadyList[CONSTANTS.PLAYERSEAT.BACK] = false
 
-        this.localPlayer = new PlayerController_Local(this)
-        this.localPlayer.setSeat(CONSTANTS.PLAYERSEAT.SELF)
-        this.nextPlayer = new PlayerController_Robot(this)
-        this.nextPlayer.setSeat(CONSTANTS.PLAYERSEAT.NEXT)
-        this.friendPlayer = new PlayerController_Robot(this)
-        this.friendPlayer.setSeat(CONSTANTS.PLAYERSEAT.FRIEND)
-        this.backPlayer = new PlayerController_Robot(this)
-        this.backPlayer.setSeat(CONSTANTS.PLAYERSEAT.BACK)
-
         this.giveCardDelay = 0
         this.currentCardSeat=CONSTANTS.PLAYERSEAT.SELF
+    }
+
+    connectServer(){
+        return this.serviceBus.connect()
+    }
+
+    enterTable(hostType){
+        this.localPlayer = new PlayerController_Local(this)
+        this.localPlayer.setSeat(CONSTANTS.PLAYERSEAT.SELF)
+        switch(hostType){
+            case CONSTANTS.PLAYERTYPE.NETWORK :
+                this.nextPlayer = new PlayerController_Network(this)
+                this.nextPlayer.setSeat(CONSTANTS.PLAYERSEAT.NEXT)
+                this.friendPlayer = new PlayerController_Network(this)
+                this.friendPlayer.setSeat(CONSTANTS.PLAYERSEAT.FRIEND)
+                this.backPlayer = new PlayerController_Network(this)
+                this.backPlayer.setSeat(CONSTANTS.PLAYERSEAT.BACK)
+                break
+            case CONSTANTS.PLAYERTYPE.AI :
+                this.nextPlayer = new PlayerController_Robot(this)
+                this.nextPlayer.setSeat(CONSTANTS.PLAYERSEAT.NEXT)
+                this.friendPlayer = new PlayerController_Robot(this)
+                this.friendPlayer.setSeat(CONSTANTS.PLAYERSEAT.FRIEND)
+                this.backPlayer = new PlayerController_Robot(this)
+                this.backPlayer.setSeat(CONSTANTS.PLAYERSEAT.BACK)
+                break
+            default:
+                this.nextPlayer = new PlayerController_Robot(this)
+                this.nextPlayer.setSeat(CONSTANTS.PLAYERSEAT.NEXT)
+                this.friendPlayer = new PlayerController_Robot(this)
+                this.friendPlayer.setSeat(CONSTANTS.PLAYERSEAT.FRIEND)
+                this.backPlayer = new PlayerController_Robot(this)
+                this.backPlayer.setSeat(CONSTANTS.PLAYERSEAT.BACK)
+        }
+
         
         this.scheduler = new Scheduler()
         this.scheduler.run(this.update.bind(this))

@@ -7,14 +7,11 @@
  */
 // GENERATED CODE -- DO NOT EDIT!
 
-var jspb = require('db://assets/scripts/protocol/google-protobuf');
+ 
 var goog = jspb;
 var global = Function('return this')();
 
-var google_protobuf_descriptor_pb = require('db://assets/scripts/protocol/google-protobuf/google/protobuf/descriptor_pb.js');
-goog.object.extend(proto, google_protobuf_descriptor_pb);
 goog.exportSymbol('proto.LoginType', null, global);
-goog.exportSymbol('proto.msgCode', null, global);
 /**
  * @enum {number}
  */
@@ -93,30 +90,5 @@ proto.LoginType = {
   STEAMLINUX: 71,
   STEAMXBOX: 72
 };
-
-
-/**
- * A tuple of {field number, class constructor} for the extension
- * field named `msgCode`.
- * @type {!jspb.ExtensionFieldInfo<number>}
- */
-proto.msgCode = new jspb.ExtensionFieldInfo(
-    50001,
-    {msgCode: 0},
-    null,
-     /** @type {?function((boolean|undefined),!jspb.Message=): !Object} */ (
-         null),
-    0);
-
-google_protobuf_descriptor_pb.MessageOptions.extensionsBinary[50001] = new jspb.ExtensionFieldBinaryInfo(
-    proto.msgCode,
-    jspb.BinaryReader.prototype.readInt32,
-    jspb.BinaryWriter.prototype.writeInt32,
-    undefined,
-    undefined,
-    false);
-// This registers the extension field with the extended class, so that
-// toObject() will function correctly.
-google_protobuf_descriptor_pb.MessageOptions.extensions[50001] = proto.msgCode;
 
 goog.object.extend(exports, proto);

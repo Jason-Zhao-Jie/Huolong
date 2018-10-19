@@ -1,7 +1,8 @@
 import protoMessageCodeHelper from "../protocol/proto_message_code_helper";
 
 // 项目报错时, 执行以下替换:
-// 字符串 require('google-protobuf替换为require('db://assets/scripts/protocol/google-protobuf
+// 将所有 var jspb = require('google-protobuf') 去掉
+// 将require google-protobuf目录下的都去掉, 连同定义的变量的所有引用处
 
 let SystemProto = require("../protocol/ArmyAntMessage/System/SocketHead_pb")
 

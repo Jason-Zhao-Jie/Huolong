@@ -397,6 +397,7 @@ cc.Class({
             this.controller = new Controller_Huolong(this)
             this.viewController = new ViewController_Huolong(this, this.controller)
 
+            // Bind callbacks
             this.startMenu_btnSimpleStart.node.on(cc.Node.EventType.TOUCH_END, this.onClickSimpleStart.bind(this))
             this.startMenu_btnCreateRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickCreateRoom.bind(this))
             this.startMenu_btnJoinRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickJoinRoom.bind(this))
@@ -413,15 +414,18 @@ cc.Class({
             this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onMusicVolumnChange.bind(this))
             this.setting_btnSaveClose.node.on(cc.Node.EventType.TOUCH_END, this.onSaveSettings.bind(this))
 
-            // 播放背景音乐, 因包体积过大, 暂时去掉背景音乐
+            // Connect to server
+            this.controller.connectServer()
+
+            // 播放背景音乐, 因包体积过大, 暂时去掉背景音乐, 预计将来从服务器获取背景音乐
             // this.bgmId = cc.audioEngine.play(this.audio_bgm, true, globalConfig.gameSettings.musicVolumn)
         }
     },
 
     start () {
         if(!CC_EDITOR){
+            this.controller.enterTable(CONSTANTS.PLAYERTYPE.NETWORK)
             this.resetToStart()
-            
             this.wechatLogin()
         }
     },

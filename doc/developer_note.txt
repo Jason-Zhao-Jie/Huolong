@@ -1,0 +1,5 @@
+19th, Oct. 2018, Fri.
+微信小游戏对于websocket有如下三个要求:
+    1. 必须事先在后台配置页面配置服务器域名, 仅能与该服务器进行通讯
+    2. 不能配置IP地址URI, 必须是域名, 因此得先在cocoscreator及原生平台上调试通过, 然后上线服务器, 最后再调试微信小游戏平台
+    3. 必须是SSL (wss头), 因此需要在服务端建立SSL上的websocket服务器模型, 最好是再建立起不同服务器(socket, ssl-socket, websocket, ssl-websocket)的管理类, 以管理各服务器配置和权限(例如某些应用只允许运行在ssl上或只允许运行在websocket上)
