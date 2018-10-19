@@ -2,6 +2,10 @@ import CONSTANTS from './constants'
 
 export default {
     debugLevel:CONSTANTS.DEBUGLEVEL.DEBUG,
+    serverSettings:{
+        websocketServerURI:"ws://127.0.0.1:8080/",
+        httpServerURI:"http://127.0.0.1:80/"
+    },
     gameSettings:{
         musicVolumn:50,
         huolong:{
