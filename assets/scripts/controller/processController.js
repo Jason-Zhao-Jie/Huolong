@@ -7,17 +7,18 @@ import Scheduler from '../utils/scheduler'
 import globalConfig from '../config/globalConfig'
 import ServiceBus from './serviceBus'
 
+let $onSocketDisconnected = Symbol("@onSocketDisconnected")
+
 export default class ProcessController {
     /**
      * @param {cc.Canvas} mainscene 
      * @param {CONSTANTS.GAMETYPE} gameType 
-     * @param {CONSTANTS.PLAYERTYPE} hostType 
      */
-    constructor(mainscene, gameType, hostType){
+    constructor(mainscene, gameType){
         this.view = mainscene
         this.modal = createModal(gameType)
         this.state = CONSTANTS.GAMESTATE.START
-        this.serviceBus = new ServiceBus(this)
+        this.serviceBus = new ServiceBus(this, this[$onSocketDisconnected])
         
         this.messageQueue = []
         this.roundReadyList = {}
@@ -244,5 +245,11 @@ export default class ProcessController {
 
     onThrowCards(playerSeat, cards){
 
+    }
+
+    // private member functions
+    [$onSocketDisconnected](){
+        cc.log("Will reconnect to server ...")
+        this.serviceBus.connect()
     }
 }

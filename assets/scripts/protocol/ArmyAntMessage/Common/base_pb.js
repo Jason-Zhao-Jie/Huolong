@@ -12,6 +12,7 @@ var goog = jspb;
 var global = Function('return this')();
 
 goog.exportSymbol('proto.LoginType', null, global);
+goog.exportSymbol('proto.OnlineStatus', null, global);
 /**
  * @enum {number}
  */
@@ -90,5 +91,20 @@ proto.LoginType = {
   STEAMLINUX: 71,
   STEAMXBOX: 72
 };
+
+/**
+ * @enum {number}
+ */
+proto.OnlineStatus = {
+  OFFLINE: 0,
+  ONLINE: 1,
+  LOGINGIN: 2,
+  BUSY: 3,
+  HUOLONGHALL: 4,
+  HUOLONGREADY: 5,
+  HUOLONGPLAYING: 6,
+  HUOLONGROUNDREPORT: 7
+};
+
 
 goog.object.extend(exports, proto);

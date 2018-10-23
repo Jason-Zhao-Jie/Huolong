@@ -20,8 +20,14 @@ const message_list = {
 	
 	["proto.ArmyAntMessage.SubApps.C2SM_HuolongLoginRequest"] : 10101001,
 	["proto.ArmyAntMessage.SubApps.SM2C_HuolongLoginResponse"] : 10102001,
-	["proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest"] : 10101002,
-	["proto.ArmyAntMessage.SubApps.SM2C_HuolongLogoutResponse"] : 10102002,
+    ["proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest"]: 10101002,
+    ["proto.ArmyAntMessage.SubApps.SM2C_HuolongLogoutResponse"]: 10102002,
+    ["proto.ArmyAntMessage.SubApps.C2SM_HuolongCreateTableRequest"]: 10101011,
+    ["proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse"]: 10102011,
+    ["proto.ArmyAntMessage.SubApps.C2SM_HuolongEnterTableRequest"]: 10101012,
+    ["proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse"]: 10102012,
+    ["proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeRoomInfo"]: 10101013,
+    ["proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeGameStart"]: 10101014,
 }
 
 const protoMessageCodeHelper = {
