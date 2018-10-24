@@ -56,7 +56,7 @@ export default class ServiceBus{
         }
     }
 
-    [$onerror](code, reason){
-        cc.warn("Received websocket error, code: " + code, ", reason: " + reason);
+    [$onerror](eventPhase, readyState){
+        cc.warn("Received websocket error, eventPhase: " + eventPhase, ", readyState: " + readyState);
     }
 }

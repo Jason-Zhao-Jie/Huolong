@@ -34,39 +34,13 @@ cc.Class({
             default:null,
             type:cc.Prefab
         },
+        pretype_startScene:{
+            default:null,
+            type:cc.Canvas
+        },
         audio_bgm:{
             default:null,
             url: cc.AudioClip,
-        },
-        startMenu: {
-            default: null,
-            type: cc.Layout,
-            serializable: true
-        },
-        startMenu_btnSimpleStart: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-        startMenu_btnCreateRoom: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-        startMenu_btnJoinRoom: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-        startMenu_btnHistory: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-        startMenu_btnSetting: {
-            default: null,
-            type: cc.Button,
-            serializable: true
         },
         infoUI: {
             default: null,
@@ -295,66 +269,6 @@ cc.Class({
             serializable: true
         },
 
-        panelGameReportHuolong: {
-            default: null,
-            type: cc.Layout,
-            serializable: true
-        },
-
-        gameReportHuolong_labelGameResult: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_labelTotalRoundsCount: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_labelOurValue: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_labelTheirValue: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_btnBackToStart: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
-        settingPanel: {
-            default: null,
-            type: cc.Layout,
-            serializable: true
-        },
-
-        setting_sliderMusicVolumn: {
-            default: null,
-            type: cc.Slider,
-            serializable: true
-        },
-
-        setting_sliderMusicVolumn_btnBar: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
-        setting_btnSaveClose: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
         controller:{
             default: null,
             type: ProcessController
@@ -379,15 +293,6 @@ cc.Class({
         curNeedThrowCount:{
             default: 0
         },
-
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -398,21 +303,11 @@ cc.Class({
             this.viewController = new ViewController_Huolong(this, this.controller)
 
             // Bind callbacks
-            this.startMenu_btnSimpleStart.node.on(cc.Node.EventType.TOUCH_END, this.onClickSimpleStart.bind(this))
-            this.startMenu_btnCreateRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickCreateRoom.bind(this))
-            this.startMenu_btnJoinRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickJoinRoom.bind(this))
-            this.startMenu_btnHistory.node.on(cc.Node.EventType.TOUCH_END, this.onClickHistory.bind(this))
-            this.startMenu_btnSetting.node.on(cc.Node.EventType.TOUCH_END, this.onClickSetting.bind(this))
             this.roundReportHuolong_btnSearchDesk.node.on(cc.Node.EventType.TOUCH_END, this.onClickSearchDesk.bind(this))
             this.roundReportHuolong_btnContinue.node.on(cc.Node.EventType.TOUCH_END, this.onClickRoundContinue.bind(this))
-            this.gameReportHuolong_btnBackToStart.node.on(cc.Node.EventType.TOUCH_END, this.resetToStart.bind(this))
             this.btnOKOnly.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onBtnCancel.bind(this))
-            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_END, this.onMusicVolumnChange.bind(this))
-            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_MOVE, this.onMusicVolumnChange.bind(this))
-            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onMusicVolumnChange.bind(this))
-            this.setting_btnSaveClose.node.on(cc.Node.EventType.TOUCH_END, this.onSaveSettings.bind(this))
 
             // Connect to server
             this.controller.connectServer()
@@ -424,9 +319,10 @@ cc.Class({
 
     start () {
         if(!CC_EDITOR){
-            this.controller.enterTable(CONSTANTS.PLAYERTYPE.NETWORK)
-            this.resetToStart()
+            this.resetUI()
             this.wechatLogin()
+            this.controller.enterTable(CONSTANTS.PLAYERTYPE.NETWORK)
+            this.viewController.reset()
         }
     },
 
@@ -570,28 +466,6 @@ cc.Class({
 
     },
 
-    onClickSimpleStart () {
-        this.startMenu.node.active = false
-        this.viewController.reset()
-    },
-
-    onClickCreateRoom () {
-        this.showTips('联网对战服务器正在建设中, 敬请期待')
-    },
-
-    onClickJoinRoom () {
-        this.showTips('联网对战服务器正在建设中, 敬请期待')
-    },
-
-    onClickHistory () {
-        this.showTips('联网对战服务器正在建设中, 敬请期待')
-    },
-
-    onClickSetting () {
-        this.setting_sliderMusicVolumn.progress = globalConfig.gameSettings.musicVolumn / 100
-        this.settingPanel.node.active = true
-    },
-
     // 确定按钮回调
     onBtnOK(){
         let retVal = false
@@ -654,19 +528,8 @@ cc.Class({
         this.viewController.onRoundContinue()
     },
 
-    onMusicVolumnChange(){
-        cc.audioEngine.setVolume(this.bgmId, this.setting_sliderMusicVolumn.progress * 100)
-    },
-
-    onSaveSettings(){
-        globalConfig.gameSettings.musicVolumn = this.setting_sliderMusicVolumn.progress * 100
-        this.settingPanel.node.active = false
-    },
-
     // 回到开始菜单
-    resetToStart () {
-        this.startMenu.node.active = true
-        this.settingPanel.node.active = false
+    resetUI () {
         this.infoUI.node.active = false
         this.info_myPlayerInfo_iconZhuang.node.active = false
         this.info_nextPlayerInfo_iconZhuang.node.active = false
@@ -674,7 +537,6 @@ cc.Class({
         this.info_backPlayerInfo_iconZhuang.node.active = false
         this.cardLayouts.node.active = false
         this.panelRoundReportHuolong.node.active = false
-        this.panelGameReportHuolong.node.active = false
         this.clearAllThrewCards()
     },
 

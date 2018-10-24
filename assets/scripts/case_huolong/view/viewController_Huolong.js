@@ -386,19 +386,10 @@ export default class ViewController_Huolong{
     }
 
     onGameOver(gameReportResult){
-        this.view.showTips("游戏结束, 获胜者:"+(gameReportResult.areWeWin?"我方":"敌方")+", 总局数:"+gameReportResult.roundsCount+", 即将返回开始界面")
-        this.view.panelGameReportHuolong.node.active = true
-        this.view.gameReportHuolong_labelTotalRoundsCount.string = gameReportResult.roundsCount
-        if(gameReportResult.areWeWin){
-            this.view.gameReportHuolong_labelGameResult.string = "游戏胜利"
-            this.view.gameReportHuolong_labelGameResult.node.color = LABEL_COLOR_GREEN
-            this.view.gameReportHuolong_labelOurValue = "胜利"
-            this.view.gameReportHuolong_labelTheirValue = gameReportResult.loserLevel
-        }else{
-            this.view.gameReportHuolong_labelGameResult.string = "游戏结束"
-            this.view.gameReportHuolong_labelGameResult.node.color = LABEL_COLOR_RED
-            this.view.gameReportHuolong_labelOurValue = gameReportResult.loserLevel
-            this.view.gameReportHuolong_labelTheirValue = "胜利"
-        }
+        let startScene = this.view.pretype_startScene
+        cc.director.loadScene("StartScene", ()=>{
+            let canvas = cc.director.getScene().getChildByName('Canvas')
+            canvas.getComponent(startScene).onGameOver(gameReportResult)
+        })
     }
 }
