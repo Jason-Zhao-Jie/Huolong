@@ -4,6 +4,7 @@ import TipBar from './tipBar'
 import SettingPanel from './settingPanel'
 import EnterRoomPanel from './enterRoomPanel'
 import GameReportPanel_Huolong from './gameReportPanel_huolong'
+import RoundReportPanel_Huolong from './roundReportPanel_huolong'
 import MainScene from './mainScene'
 
 let StartScene = cc.Class({
@@ -27,6 +28,10 @@ let StartScene = cc.Class({
             type:cc.Prefab
         },
         prefab_gameReportPanel_huolong:{
+            default:null,
+            type:cc.Prefab
+        },
+        prefab_roundReportPanel_huolong:{
             default:null,
             type:cc.Prefab
         },
@@ -93,6 +98,7 @@ let StartScene = cc.Class({
             SettingPanel.setPrefab(this.prefab_settingPanel)
             EnterRoomPanel.setPrefab(this.prefab_enterRoomPanel)
             GameReportPanel_Huolong.setPrefab(this.prefab_gameReportPanel_huolong)
+            RoundReportPanel_Huolong.setPrefab(this.prefab_roundReportPanel_huolong)
 
             this.controller = HallController.getInstance()
             // 播放背景音乐, 因包体积过大, 暂时去掉背景音乐, 预计将来从服务器获取背景音乐

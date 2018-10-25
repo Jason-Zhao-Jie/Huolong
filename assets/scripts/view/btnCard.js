@@ -78,11 +78,14 @@ let BtnCard = cc.Class({
     },
 
     canClick(){
-        return this.enabledClick && 
+        return this.enabledClick && this.controller &&
                 (   this.controller.getState() == CONSTANTS.GAMESTATE.INGAME || 
-                    this.controller.getState() == CONSTANTS.GAMESTATE.GIVINGLASTCARDS && 
-                        ( this.getColor() == CONSTANTS.CARDCOLOR.JOKER || 
-                        this.controller.getZhuangSeat() == CONSTANTS.PLAYERSEAT.SELF)   )
+                    (   this.controller.getState() == CONSTANTS.GAMESTATE.GIVINGLASTCARDS && 
+                        (   this.getColor() == CONSTANTS.CARDCOLOR.JOKER || 
+                            this.controller.getZhuangSeat() == CONSTANTS.PLAYERSEAT.SELF
+                        )
+                    )
+                )
     },
 
     onClick (){

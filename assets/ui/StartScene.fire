@@ -1376,6 +1376,9 @@
     "prefab_gameReportPanel_huolong": {
       "__uuid__": "1bdc2fbc-c340-4f70-958c-d7e05cdf09d0"
     },
+    "prefab_roundReportPanel_huolong": {
+      "__uuid__": "c690f3ee-2296-403d-af61-9d0554f36575"
+    },
     "startMenu": {
       "__id__": 30
     },
@@ -1394,7 +1397,6 @@
     "startMenu_btnSetting": {
       "__id__": 28
     },
-    "panelGameReportHuolong": null,
     "userCode": "",
     "bgmId": 0,
     "controller": null

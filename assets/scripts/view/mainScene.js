@@ -184,72 +184,6 @@ let MainScene = cc.Class({
             serializable: true
         },
 
-        panelRoundReportHuolong: {
-            default: null,
-            type: cc.Layout,
-            serializable: true
-        },
-
-        roundReportHuolong_labelWinLose: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_labelWinnerGetLast: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_labelLoserScore: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_labelOurOldLevel: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_labelOurNewLevel: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_labelTheirOldLevel: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_labelTheirNewLevel: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        roundReportHuolong_lastCards: {
-            default: null,
-            type: cc.Node,
-            serializable: true
-        },
-
-        roundReportHuolong_btnSearchDesk: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
-        roundReportHuolong_btnContinue: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
         controller:{
             default: null,
             type: BattleController
@@ -282,8 +216,6 @@ let MainScene = cc.Class({
         if(!CC_EDITOR){
 
             // Bind callbacks
-            this.roundReportHuolong_btnSearchDesk.node.on(cc.Node.EventType.TOUCH_END, this.onClickSearchDesk.bind(this))
-            this.roundReportHuolong_btnContinue.node.on(cc.Node.EventType.TOUCH_END, this.onClickRoundContinue.bind(this))
             this.btnOKOnly.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onBtnCancel.bind(this))
@@ -405,21 +337,6 @@ let MainScene = cc.Class({
         }
     },
 
-    convertValueToString(value){
-        switch(value){            
-            case 1:
-                return 'A'
-            case 11:
-                return 'J'
-            case 12:
-                return 'Q'
-            case 13:
-                return 'K'
-            default:
-                return value+''
-        }
-    },
-
     showUserInfo(seat, nickName, headUrl){
         loader.loadImgTextureFromUrl(headUrl, (texture)=>{
             switch(seat){
@@ -505,15 +422,6 @@ let MainScene = cc.Class({
         this.labelTips.string = tip
     },
 
-    onClickSearchDesk(){
-        this.panelRoundReportHuolong.node.active = false
-    },
-
-    onClickRoundContinue(){
-        this.panelRoundReportHuolong.node.active = false
-        this.viewController.onRoundContinue()
-    },
-
     // 回到开始菜单
     resetUI () {
         this.infoUI.node.active = false
@@ -522,7 +430,6 @@ let MainScene = cc.Class({
         this.info_friendPlayerInfo_iconZhuang.node.active = false
         this.info_backPlayerInfo_iconZhuang.node.active = false
         this.cardLayouts.node.active = false
-        this.panelRoundReportHuolong.node.active = false
         this.clearAllThrewCards()
     },
 

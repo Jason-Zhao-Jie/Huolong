@@ -84,7 +84,6 @@ let GameReportPanel_Huolong = cc.Class({
 });
 
 
-
 GameReportPanel_Huolong.setPrefab = (gameReportPanel_huolong_prefab)=>{
     prefab = gameReportPanel_huolong_prefab
 }
@@ -94,5 +93,6 @@ GameReportPanel_Huolong.show = (data, callback)=>{
     panel.getComponent(GameReportPanel_Huolong).startShow(data, callback)
     return panel
 }
+
 
 export default GameReportPanel_Huolong

@@ -1,7 +1,9 @@
 import CONSTANTS from '../../config/constants'
+import pokerUtils from '../utils/pokerUtils'
 import BtnCard from '../../view/btnCard'
 import TipBar from '../../view/tipBar'
 import Card from '../../data/card'
+import RoundReportPanel_Huolong from '../../view/roundReportPanel_huolong'
 import StartScene from '../../view/startScene'
 import loader from '../../utils/loader'
 
@@ -104,9 +106,9 @@ export default class ViewController_Huolong{
             }
         }
         if(winnerValue != null)
-            this.view.info_roundInfo_nowValue.string = this.view.convertValueToString(winnerValue)
+            this.view.info_roundInfo_nowValue.string = pokerUtils.convertValueToString(winnerValue)
         if(loserValue != null)
-            this.view.info_roundInfo_loserValue.string = this.view.convertValueToString(loserValue)
+            this.view.info_roundInfo_loserValue.string = pokerUtils.convertValueToString(loserValue)
         if(color!=null){
             let url = 'ui/unknown'
             switch(color){
@@ -282,107 +284,17 @@ export default class ViewController_Huolong{
     }
 
     onRoundOver(roundReportResult){
-        this.view.panelRoundReportHuolong.node.active = true
-        let retString = ""
-        if(roundReportResult.areWeOldZhuang && roundReportResult.areWeNewZhuang){
-            if(roundReportResult.ourNewLevel == roundReportResult.ourOldLevel){
-                retString = "保庄"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }else if(roundReportResult.ourNewLevel < roundReportResult.ourOldLevel && (roundReportResult.aSuccess || roundReportResult.jSuccess)){
-                retString = "掉级"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.RED
-            }else if(roundReportResult.ourNewLevel - roundReportResult.ourOldLevel == 1 || (roundReportResult.ourNewLevel == 1 && roundReportResult.ourOldLevel == 13)){
-                retString = "晋级"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }else{
-                retString = "摘星"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }
-        }else if(roundReportResult.areWeOldZhuang && !roundReportResult.areWeNewZhuang){
-            if(roundReportResult.theirNewLevel == roundReportResult.theirOldLevel){
-                retString = "丢庄"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.RED
-            }else if(roundReportResult.theirNewLevel - roundReportResult.theirOldLevel == 1 || (roundReportResult.theirNewLevel == 1 && roundReportResult.theirOldLevel == 13)){
-                retString = "被连抠带垮"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.RED
-            }else{
-                retString = "被逆转摘星"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.RED
-            }
-        }else if(!roundReportResult.areWeOldZhuang && roundReportResult.areWeNewZhuang){
-            if(roundReportResult.ourNewLevel == roundReportResult.ourOldLevel){
-                retString = "夺庄"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }else if(roundReportResult.ourNewLevel - roundReportResult.ourOldLevel == 1 || (roundReportResult.ourNewLevel == 1 && roundReportResult.ourOldLevel == 13)){
-                retString = "连抠带垮"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }else{
-                retString = "逆转摘星"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }
-        }else if(!roundReportResult.areWeOldZhuang && !roundReportResult.areWeNewZhuang){
-            if(roundReportResult.theirNewLevel == roundReportResult.theirOldLevel){
-                retString = "干抠"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }else if(roundReportResult.theirNewLevel < roundReportResult.theirOldLevel && (roundReportResult.aSuccess || roundReportResult.jSuccess)){
-                retString = "夺命勾"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.GREEN
-            }else if(roundReportResult.theirNewLevel - roundReportResult.theirOldLevel == 1 || (roundReportResult.theirNewLevel == 1 && roundReportResult.theirOldLevel == 13)){
-                retString = "败北"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.RED
-            }else{
-                retString = "被摘星"
-                this.view.roundReportHuolong_labelWinLose.node.color = CONSTANTS.LABEL_COLOR.RED
-            }
-        }
-        // 本局结果文字
-        this.view.roundReportHuolong_labelWinLose.string = retString
-        this.view.roundReportHuolong_labelWinnerGetLast.string = roundReportResult.isLoserGetLastCards?"失败":"成功"
-        this.view.roundReportHuolong_labelWinnerGetLast.node.color = roundReportResult.isLoserGetLastCards?CONSTANTS.LABEL_COLOR.RED:CONSTANTS.LABEL_COLOR.GREEN
-        this.view.roundReportHuolong_labelLoserScore.string = roundReportResult.loserScore
-        if(roundReportResult.isLoserScoreOK)
-            this.view.roundReportHuolong_labelLoserScore.node.color = CONSTANTS.LABEL_COLOR.GREEN
-        else
-            this.view.roundReportHuolong_labelLoserScore.node.color = CONSTANTS.LABEL_COLOR.RED
-        this.view.roundReportHuolong_labelOurOldLevel.string = this.view.convertValueToString(roundReportResult.ourOldLevel)
-        this.view.roundReportHuolong_labelOurNewLevel.string = this.view.convertValueToString(roundReportResult.ourNewLevel)
-        if(roundReportResult.ourNewLevel > roundReportResult.ourOldLevel)
-            this.view.roundReportHuolong_labelOurNewLevel.node.color = CONSTANTS.LABEL_COLOR.GREEN
-        else
-            this.view.roundReportHuolong_labelOurNewLevel.node.color = CONSTANTS.LABEL_COLOR.RED
-        if(roundReportResult.ourOldLevel == 1 && roundReportResult.ourNewLevel > 1)
-            this.view.roundReportHuolong_labelOurNewLevel.string = '胜利'
-        this.view.roundReportHuolong_labelTheirOldLevel.string = this.view.convertValueToString(roundReportResult.theirOldLevel)
-        this.view.roundReportHuolong_labelTheirNewLevel.string = this.view.convertValueToString(roundReportResult.theirNewLevel)
-        if(roundReportResult.theirNewLevel > roundReportResult.theirOldLevel)
-            this.view.roundReportHuolong_labelTheirNewLevel.node.color = CONSTANTS.LABEL_COLOR.GREEN
-        else
-            this.view.roundReportHuolong_labelTheirNewLevel.node.color = CONSTANTS.LABEL_COLOR.RED
-        if(roundReportResult.theirOldLevel == 1 && roundReportResult.theirNewLevel > 1)
-            this.view.roundReportHuolong_labelTheirNewLevel.string = '胜利'
-        // 底牌
-        this.view.roundReportHuolong_lastCards.removeAllChildren()
-        let lastCardsCount = roundReportResult.lastCards.length
-        for(let i=0; i<lastCardsCount; ++i){
-            let btnCard = cc.instantiate(this.view.prefab_card)
-            btnCard.getComponent(BtnCard).setCard(roundReportResult.lastCards[i].getId(), roundReportResult.lastCards[i].getImgPath())
-            btnCard.getComponent(BtnCard).setController(this.controller)
-            btnCard.getComponent(BtnCard).setClickEnabled(false)
-            this.view.roundReportHuolong_lastCards.addChild(btnCard)
-            btnCard.x = (i-(lastCardsCount-1)/2) * 30
-            btnCard.y = 0
-        }
-
         this.setGameInfo(0, roundReportResult.newZhuang, roundReportResult.areWeNewZhuang?roundReportResult.ourNewLevel:roundReportResult.theirNewLevel, roundReportResult.areWeNewZhuang?roundReportResult.theirNewLevel:roundReportResult.ourNewLevel )
+        
+        let node = RoundReportPanel_Huolong.show(roundReportResult, ()=>{
+            this.controller.pushEvent(CONSTANTS.PLAYERSEAT.SELF, CONSTANTS.PLAYERWORK.ROUNDREADY)
+            this.view.closeOKCancelButtons()
+        })
         this.view.showOKOnlyButton('结算', ()=>{
-            this.view.panelRoundReportHuolong.node.active = true
+            node.active = true
             return true
         })
-    }
-
-    onRoundContinue(){
-        this.controller.pushEvent(CONSTANTS.PLAYERSEAT.SELF, CONSTANTS.PLAYERWORK.ROUNDREADY)
-        this.view.closeOKCancelButtons()
+        this.view.node.addChild(node)
     }
 
     onGameOver(gameReportResult){
