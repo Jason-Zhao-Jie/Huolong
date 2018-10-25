@@ -129,7 +129,9 @@ let StartScene = cc.Class({
     },
 
     onClickJoinRoom () {
-        TipBar.show('联网对战服务器正在建设中, 敬请期待')
+        this.node.addChild(EnterRoomPanel.show(()=>{
+            TipBar.show('联网对战服务器正在建设中, 敬请期待')
+        }))
     },
 
     onClickHistory () {

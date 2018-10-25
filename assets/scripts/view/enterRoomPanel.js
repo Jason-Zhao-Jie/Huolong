@@ -56,9 +56,12 @@ let EnterRoomPanel = cc.Class({
             default: null,
             type: cc.Button
         },
+        maxLength: {
+            default: 10,
+        },
         callback: {
             default: null,
-        }
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -75,24 +78,29 @@ let EnterRoomPanel = cc.Class({
             this.btnNumber8.node.on(cc.Node.EventType.TOUCH_END, ()=>{this.onClickNumber(8)})
             this.btnNumber9.node.on(cc.Node.EventType.TOUCH_END, ()=>{this.onClickNumber(9)})
             this.btnNumber0.node.on(cc.Node.EventType.TOUCH_END, ()=>{this.onClickNumber(0)})
+            this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onClickCancel.bind(this))
+            this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onClickOK.bind(this))
+            this.btnOK.interactable = false
         }
     },
 
     start () {
         if(!CC_EDITOR){
+            this.labelRoomNumber.string = ""
         }
     },
 
     // update (dt) {},
 
-    startShow(callback){
+    startShow(callback, maxLength = 10){
         this.callback = callback
-        this.labelRoomNumber.string = ""
+        this.maxLength = maxLength
     },
 
     onClickNumber(number){
-        if(this.labelRoomNumber.string != "" || number != 0){
+        if(this.labelRoomNumber.string.length < this.maxLength && (this.labelRoomNumber.string != "" || number != 0)){
             this.labelRoomNumber.string += number
+            this.btnOK.interactable = true
         }
     },
 
@@ -101,8 +109,10 @@ let EnterRoomPanel = cc.Class({
     },
 
     onClickOK(){
-        this.callback(Number(this.labelRoomNumber.string))
-        this.node.removeFromParent()
+        if(this.btnOK.interactable){
+            this.callback(Number(this.labelRoomNumber.string))
+            this.node.removeFromParent()
+        }
     },
 
 });
@@ -111,9 +121,9 @@ EnterRoomPanel.setPrefab = (enterRoomPanel_prefab)=>{
     prefab = enterRoomPanel_prefab
 }
 
-EnterRoomPanel.show = (callback)=>{
+EnterRoomPanel.show = (callback, maxLength = 10)=>{
     let panel = cc.instantiate(prefab)
-    panel.getComponent(EnterRoomPanel).startShow(callback)
+    panel.getComponent(EnterRoomPanel).startShow(callback, maxLength)
     return panel
 }
 
