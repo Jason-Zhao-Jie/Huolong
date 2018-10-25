@@ -5,11 +5,8 @@ import PlayerController_Robot from '../case_huolong/controller/playerController_
 import PlayerController_Network from '../case_huolong/controller/playerController_network'
 import Scheduler from '../utils/scheduler'
 import globalConfig from '../config/globalConfig'
-import ServiceBus from './serviceBus'
 
-let $onSocketDisconnected = Symbol("@onSocketDisconnected")
-
-export default class ProcessController {
+export default class BattleController {
     /**
      * @param {cc.Canvas} mainscene 
      * @param {CONSTANTS.GAMETYPE} gameType 
@@ -18,7 +15,6 @@ export default class ProcessController {
         this.view = mainscene
         this.modal = createModal(gameType)
         this.state = CONSTANTS.GAMESTATE.START
-        this.serviceBus = new ServiceBus(this, this[$onSocketDisconnected])
         
         this.messageQueue = []
         this.roundReadyList = {}
@@ -29,10 +25,6 @@ export default class ProcessController {
 
         this.giveCardDelay = 0
         this.currentCardSeat=CONSTANTS.PLAYERSEAT.SELF
-    }
-
-    connectServer(){
-        return this.serviceBus.connect()
     }
 
     enterTable(hostType){
@@ -245,11 +237,5 @@ export default class ProcessController {
 
     onThrowCards(playerSeat, cards){
 
-    }
-
-    // private member functions
-    [$onSocketDisconnected](){
-        cc.log("Will reconnect to server ...")
-        this.serviceBus.connect()
     }
 }

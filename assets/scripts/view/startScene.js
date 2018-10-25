@@ -1,7 +1,12 @@
-import globalConfig from '../config/globalConfig'
+import CONSTANTS from '../config/constants'
+import HallController from '../controller/hallController'
 import TipBar from './tipBar'
+import SettingPanel from './settingPanel'
+import EnterRoomPanel from './enterRoomPanel'
+import GameReportPanel_Huolong from './gameReportPanel_huolong'
+import MainScene from './mainScene'
 
-cc.Class({
+let StartScene = cc.Class({
     extends: cc.Canvas,
 
     properties: {
@@ -10,6 +15,18 @@ cc.Class({
             type:cc.Prefab
         },
         prefab_tips:{
+            default:null,
+            type:cc.Prefab
+        },
+        prefab_settingPanel:{
+            default:null,
+            type:cc.Prefab
+        },
+        prefab_enterRoomPanel:{
+            default:null,
+            type:cc.Prefab
+        },
+        prefab_gameReportPanel_huolong:{
             default:null,
             type:cc.Prefab
         },
@@ -48,66 +65,6 @@ cc.Class({
             serializable: true
         },
 
-        panelGameReportHuolong: {
-            default: null,
-            type: cc.Layout,
-            serializable: true
-        },
-
-        gameReportHuolong_labelGameResult: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_labelTotalRoundsCount: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_labelOurValue: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_labelTheirValue: {
-            default: null,
-            type: cc.Label,
-            serializable: true
-        },
-
-        gameReportHuolong_btnBackToStart: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
-        settingPanel: {
-            default: null,
-            type: cc.Layout,
-            serializable: true
-        },
-
-        setting_sliderMusicVolumn: {
-            default: null,
-            type: cc.Slider,
-            serializable: true
-        },
-
-        setting_sliderMusicVolumn_btnBar: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
-        setting_btnSaveClose: {
-            default: null,
-            type: cc.Button,
-            serializable: true
-        },
-
         userCode:{
             default:""
         },
@@ -115,6 +72,10 @@ cc.Class({
         bgmId:{
             default: 0,
         },
+
+        controller:{
+            default: null,
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -127,84 +88,57 @@ cc.Class({
             this.startMenu_btnJoinRoom.node.on(cc.Node.EventType.TOUCH_END, this.onClickJoinRoom.bind(this))
             this.startMenu_btnHistory.node.on(cc.Node.EventType.TOUCH_END, this.onClickHistory.bind(this))
             this.startMenu_btnSetting.node.on(cc.Node.EventType.TOUCH_END, this.onClickSetting.bind(this))
-            this.gameReportHuolong_btnBackToStart.node.on(cc.Node.EventType.TOUCH_END, this.resetMainMenu.bind(this))
-            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_END, this.onMusicVolumnChange.bind(this))
-            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_MOVE, this.onMusicVolumnChange.bind(this))
-            this.setting_sliderMusicVolumn_btnBar.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onMusicVolumnChange.bind(this))
-            this.setting_btnSaveClose.node.on(cc.Node.EventType.TOUCH_END, this.onSaveSettings.bind(this))
 
+            TipBar.setPrefab(this.prefab_tips)
+            SettingPanel.setPrefab(this.prefab_settingPanel)
+            EnterRoomPanel.setPrefab(this.prefab_enterRoomPanel)
+            GameReportPanel_Huolong.setPrefab(this.prefab_gameReportPanel_huolong)
+
+            this.controller = HallController.getInstance()
             // 播放背景音乐, 因包体积过大, 暂时去掉背景音乐, 预计将来从服务器获取背景音乐
             // this.bgmId = cc.audioEngine.play(this.audio_bgm, true, globalConfig.gameSettings.musicVolumn)
+
+            this.startMenu.node.active = true
         }
     },
 
     start () {
         if(!CC_EDITOR){
-            this.resetMainMenu()
+            
         }
     },
 
     // update (dt) {},
 
     onClickSimpleStart () {
-        cc.director.loadScene("MainScene")
+        cc.director.loadScene("MainScene", ()=>{
+            let canvas = cc.director.getScene().getChildByName('Canvas')
+            canvas.getComponent(MainScene).startGame(CONSTANTS.GAMETYPE.HUOLONG, CONSTANTS.PLAYERTYPE.NETWORK, {}) // TODO : player data
+            
+        })
     },
 
     onClickCreateRoom () {
-        this.showTips('联网对战服务器正在建设中, 敬请期待')
+        TipBar.show('联网对战服务器正在建设中, 敬请期待')
     },
 
     onClickJoinRoom () {
-        this.showTips('联网对战服务器正在建设中, 敬请期待')
+        TipBar.show('联网对战服务器正在建设中, 敬请期待')
     },
 
     onClickHistory () {
-        this.showTips('联网对战服务器正在建设中, 敬请期待')
+        TipBar.show('联网对战服务器正在建设中, 敬请期待')
     },
 
     onClickSetting () {
-        this.setting_sliderMusicVolumn.progress = globalConfig.gameSettings.musicVolumn / 100
-        this.settingPanel.node.active = true
-    },
-    
-    // 回到开始菜单
-    resetMainMenu () {
-        this.startMenu.node.active = true
-        this.panelGameReportHuolong.node.active = false
-        this.settingPanel.node.active = false
-    },
-
-    onMusicVolumnChange(){
-        cc.audioEngine.setVolume(this.bgmId, this.setting_sliderMusicVolumn.progress * 100)
-    },
-
-    onSaveSettings(){
-        globalConfig.gameSettings.musicVolumn = this.setting_sliderMusicVolumn.progress * 100
-        this.settingPanel.node.active = false
-    },
-
-    // 展示提示文
-    showTips(content){
-        let tipBar = cc.instantiate(this.prefab_tips)
-        tipBar.getComponent(TipBar).setContent(content)
-        this.node.addChild(tipBar)
+        this.node.addChild(SettingPanel.show())
     },
 
     onGameOver(gameReportResult){
-        this.showTips("游戏结束, 获胜者:"+(gameReportResult.areWeWin?"我方":"敌方")+", 总局数:"+gameReportResult.roundsCount+", 即将返回开始界面")
+        TipBar.show("游戏结束, 获胜者:"+(gameReportResult.areWeWin?"我方":"敌方")+", 总局数:"+gameReportResult.roundsCount)
         this.startMenu.node.active = false
-        this.panelGameReportHuolong.node.active = true
-        this.gameReportHuolong_labelTotalRoundsCount.string = gameReportResult.roundsCount
-        if(gameReportResult.areWeWin){
-            this.gameReportHuolong_labelGameResult.string = "游戏胜利"
-            this.gameReportHuolong_labelGameResult.node.color = LABEL_COLOR_GREEN
-            this.gameReportHuolong_labelOurValue = "胜利"
-            this.gameReportHuolong_labelTheirValue = gameReportResult.loserLevel
-        }else{
-            this.gameReportHuolong_labelGameResult.string = "游戏结束"
-            this.gameReportHuolong_labelGameResult.node.color = LABEL_COLOR_RED
-            this.gameReportHuolong_labelOurValue = gameReportResult.loserLevel
-            this.gameReportHuolong_labelTheirValue = "胜利"
-        }
+        this.node.addChild(GameReportPanel_Huolong.show(gameReportResult, ()=>{this.startMenu.node.active = true}))
     }
 });
+
+export default StartScene

@@ -14,12 +14,16 @@ let listenerList = {}
 export default class ServiceBus{
     constructor(controller, socketDisconnectedCallback){
         this.controller = controller
-        this[$socketService] = new SocketService(this[$onconnected], this[$ondisconnected], this[$onmessage], this[$onerror])
+        this[$socketService] = new SocketService(this[$onconnected].bind(this), this[$ondisconnected].bind(this), this[$onmessage].bind(this), this[$onerror].bind(this))
         this[$socketDisconnectedCallback] = socketDisconnectedCallback
     }
 
     connect(){
         return this[$socketService].connect(globalConfig.serverSettings.websocketServerURI)
+    }
+
+    isConnection(){
+        return this[$socketService].isConnection()
     }
 
     setMessageListener(messageCode, callback){

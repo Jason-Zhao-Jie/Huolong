@@ -15,5 +15,8 @@ export default {
             aroundOverDelay : 1.5,
             aroundAIDelay : 0.5,
         }
-    }
+    },
+    runningObjects:{
+        bgmId:0,
+    },
 }

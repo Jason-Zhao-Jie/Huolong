@@ -1,3 +1,4 @@
+let prefab = null
 
 let TipBar = cc.Class({
     extends: cc.Layout,
@@ -30,5 +31,16 @@ let TipBar = cc.Class({
         this.content.string = text
     }
 })
+
+TipBar.setPrefab = (tipbar_prefab)=>{
+    prefab = tipbar_prefab
+}
+
+TipBar.show = (content)=>{
+    let scene = cc.director.getScene()
+    let tipBar = cc.instantiate(prefab)
+    tipBar.getComponent(TipBar).setContent(content)
+    scene.getChildByName('Canvas').addChild(tipBar)
+}
 
 export default TipBar

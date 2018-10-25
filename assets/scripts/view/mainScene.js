@@ -1,24 +1,13 @@
-// Learn cc.Class:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] http://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] http://www.cocos2d-x.org/docs/creator/en/scripting/life-cycle-callbacks.html
-
 import CONSTANTS from '../config/constants'
-import globalConfig from '../config/globalConfig'
-import ProcessController from '../controller/processController'
+import loader from '../utils/loader'
+import BattleController from '../controller/battleController'
 import Controller_Huolong from '../case_huolong/controller/controller_huolong'
 import BtnCard from './btnCard'
 import TipBar from './tipBar'
 import ViewController_Huolong from '../case_huolong/view/viewController_Huolong'
-import loader from '../utils/loader';
 
 
-cc.Class({
+let MainScene = cc.Class({
     extends: cc.Canvas,
     
     editor: CC_EDITOR && {
@@ -29,14 +18,6 @@ cc.Class({
         prefab_card:{
             default:null,
             type:cc.Prefab
-        },
-        prefab_tips:{
-            default:null,
-            type:cc.Prefab
-        },
-        pretype_startScene:{
-            default:null,
-            type:cc.Canvas
         },
         audio_bgm:{
             default:null,
@@ -271,7 +252,7 @@ cc.Class({
 
         controller:{
             default: null,
-            type: ProcessController
+            type: BattleController
         },
 
         userCode:{
@@ -299,8 +280,6 @@ cc.Class({
 
     onLoad () {
         if(!CC_EDITOR){
-            this.controller = new Controller_Huolong(this)
-            this.viewController = new ViewController_Huolong(this, this.controller)
 
             // Bind callbacks
             this.roundReportHuolong_btnSearchDesk.node.on(cc.Node.EventType.TOUCH_END, this.onClickSearchDesk.bind(this))
@@ -309,25 +288,39 @@ cc.Class({
             this.btnOK.node.on(cc.Node.EventType.TOUCH_END, this.onBtnOK.bind(this))
             this.btnCancel.node.on(cc.Node.EventType.TOUCH_END, this.onBtnCancel.bind(this))
 
-            // Connect to server
-            this.controller.connectServer()
-
             // 播放背景音乐, 因包体积过大, 暂时去掉背景音乐, 预计将来从服务器获取背景音乐
             // this.bgmId = cc.audioEngine.play(this.audio_bgm, true, globalConfig.gameSettings.musicVolumn)
+            
+            this.resetUI()
+            this.wechatLogin()
         }
     },
 
     start () {
         if(!CC_EDITOR){
-            this.resetUI()
-            this.wechatLogin()
-            this.controller.enterTable(CONSTANTS.PLAYERTYPE.NETWORK)
-            this.viewController.reset()
+
         }
     },
 
     update (dt) {
         this.renderWechatSharedCanvas()
+    },
+
+    startGame(gameType, playerType, playerData){
+        switch(gameType){
+            case CONSTANTS.GAMETYPE.HUOLONG:
+                this.controller = new Controller_Huolong(this)
+                this.viewController = new ViewController_Huolong(this, this.controller)
+                break
+            case CONSTANTS.GAMETYPE.CHUDADI:
+            case CONSTANTS.GAMETYPE.DOUDIZHU:
+            case CONSTANTS.GAMETYPE.ZHUOHONGSAN:
+            default:
+                break
+        }
+
+        this.controller.enterTable(playerType)
+        this.viewController.reset()
     },
 
     checkIsWechatGamePlatform(){
@@ -345,7 +338,7 @@ cc.Class({
                         lang:"zh_CN",
                         success: (res)=>{
                             if(!res.userInfo){
-                                this.showTips("获取微信用户信息成功, 但是没有任何数据, 现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
+                                TipBar.show("获取微信用户信息成功, 但是没有任何数据, 现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
                                 this.sendMsgToWxSharedCanvas({
                                     command:"pleaseShowUserInfo",
                                     reason:"getUserInfo succeed, but nothing returned"
@@ -357,13 +350,13 @@ cc.Class({
                             // iOS 和 Android 对于拒绝授权的回调 errMsg 没有统一，需要做一下兼容处理
                             if (res.errMsg.indexOf('auth deny') > -1 || 	res.errMsg.indexOf('auth denied') > -1 ) {
                                 // 处理用户拒绝授权的情况
-                                this.showTips("拒绝授权, 将不能进行联机游戏, 如需重新允许, 请点击右上角菜单中的设置")
+                                TipBar.show("拒绝授权, 将不能进行联机游戏, 如需重新允许, 请点击右上角菜单中的设置")
                             }else{
                                 let errStr = ""
                                 for(let i=0; i<res.errMsg.length;++i){
                                     errStr+=res.errMsg[i]+"  "
                                 }
-                                this.showTips("授权失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
+                                TipBar.show("授权失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
                                 this.sendMsgToWxSharedCanvas({
                                     command:"pleaseShowUserInfo",
                                     reason:"getUserInfo failed, because of the program is in developing"
@@ -381,7 +374,7 @@ cc.Class({
                     for(let i=0; i<res.errMsg.length;++i){
                         errStr+=res.errMsg[i]+"  "
                     }
-                    this.showTips("微信登录失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
+                    TipBar.show("微信登录失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
                     this.sendMsgToWxSharedCanvas({
                         command:"pleaseShowUserInfo",
                         reason:"login failed"
@@ -510,13 +503,6 @@ cc.Class({
         this.labelOKOnly.string = label
         this.eventBtnOK = callback
         this.labelTips.string = tip
-    },
-
-    // 展示提示文
-    showTips(content){
-        let tipBar = cc.instantiate(this.prefab_tips)
-        tipBar.getComponent(TipBar).setContent(content)
-        this.node.addChild(tipBar)
     },
 
     onClickSearchDesk(){
@@ -674,3 +660,5 @@ cc.Class({
     },
 
 });
+
+export default MainScene

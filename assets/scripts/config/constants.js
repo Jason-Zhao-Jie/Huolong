@@ -1,4 +1,9 @@
 const CONSTANTS = Object.freeze({
+  
+  LABEL_COLOR:{
+    GREEN: new cc.Color(18, 200, 10),
+    RED: new cc.Color(240, 8, 8),
+  },
   /** @enum {Symbol} */
   DEBUGLEVEL:{
     NOTE:Symbol('note'),
@@ -11,6 +16,8 @@ const CONSTANTS = Object.freeze({
   GAMETYPE:{
     HUOLONG:Symbol('huolong'),  // 攉龙
     CHUDADI:Symbol('chudaD'),   // 锄大地 (后续推出)
+    DOUDIZHU:Symbol('doudizhu'),   // 锄大地 (后续推出)
+    ZHUOHONGSAN:Symbol('zhuored3'),   // 锄大地 (后续推出)
   },
   /** @enum {Symbol} */
   GAMESTATE:{

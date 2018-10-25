@@ -44,7 +44,7 @@ export default class SocketService{
     /** @param {function(boolean, string)} openedCallback */
     /** @param {function(boolean, string, number)} closedCallback */
     /** @param {function(number, any, number, any)} receivedCallback */
-    /** @param {function(number, string)} errorCallback */
+    /** @param {function(number, number)} errorCallback */
     constructor(openedCallback=null, closedCallback=null, receivedCallback=null, errorCallback=null){
         this[$socket] = null
         this[$isBigEnding] = this[$checkIsBigEnding]()

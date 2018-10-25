@@ -1,10 +1,10 @@
 import CONSTANTS from '../../config/constants'
 import globalConfig from '../../config/globalConfig'
-import ProcessController from '../../controller/processController'
+import BattleController from '../../controller/battleController'
 import Card from '../../data/card'
 import Scheduler from '../../utils/scheduler'
 
-export default class Controller_Huolong extends ProcessController {
+export default class Controller_Huolong extends BattleController {
     constructor(mainscene){
         super(mainscene, CONSTANTS.GAMETYPE.HUOLONG)
         this.willShowSeat = null
