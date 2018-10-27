@@ -35,16 +35,21 @@ const protoMessageCodeHelper = {
 		if(!message){
 			return -3;
 		}
-		let property = Object.getPrototypeOf(message);
-		let displayName = property.displayName;
-		if(!displayName && property.constructor){
-			displayName = property.constructor.displayName;
+		let displayName = ""
+		if(typeof message == "string"){	// 是消息体
+			let property = Object.getPrototypeOf(message);
+			displayName = property.displayName;
+			if(!displayName && property.constructor){
+				displayName = property.constructor.displayName;
+			}
+		}else{	// 是消息原型
+			displayName = message.displayName
 		}
 		if(!displayName){
 			return -2;
 		}
 		if(message_list.hasOwnProperty(displayName)){
-			return message_list[message];
+			return message_list[displayName];
 		}
 		return -1;
 	},

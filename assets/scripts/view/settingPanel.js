@@ -23,6 +23,10 @@ let SettingPanel = cc.Class({
             type: cc.Button,
             serializable: true
         },
+
+        callback: {
+            default: null,
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -41,6 +45,9 @@ let SettingPanel = cc.Class({
 
     // update (dt) {},
 
+    startShow(closeCB = null){
+        this.callback = closeCB
+    },
 
     onMusicVolumnChange(){
         let volumn = this.sliderMusicVolumn.progress * 100
@@ -49,6 +56,9 @@ let SettingPanel = cc.Class({
     },
 
     onSaveSettings(){
+        if(this.callback != null){
+            this.callback()
+        }
         this.node.removeFromParent()
     },
 
@@ -58,7 +68,8 @@ SettingPanel.setPrefab = (settingPanel_prefab)=>{
     prefab = settingPanel_prefab
 }
 
-SettingPanel.show = ()=>{
+SettingPanel.show = (closeCB)=>{
     let panel = cc.instantiate(prefab)
+    panel.getComponent(SettingPanel).startShow(closeCB)
     return panel
 }

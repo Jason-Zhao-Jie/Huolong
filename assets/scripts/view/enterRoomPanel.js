@@ -59,7 +59,10 @@ let EnterRoomPanel = cc.Class({
         maxLength: {
             default: 10,
         },
-        callback: {
+        okCallback: {
+            default: null,
+        },
+        cancelCallback: {
             default: null,
         },
     },
@@ -92,8 +95,9 @@ let EnterRoomPanel = cc.Class({
 
     // update (dt) {},
 
-    startShow(callback, maxLength = 10){
-        this.callback = callback
+    startShow(okCB, cancelCB = null, maxLength = 10){
+        this.okCallback = okCB
+        this.cancelCallback = cancelCB
         this.maxLength = maxLength
     },
 
@@ -105,12 +109,13 @@ let EnterRoomPanel = cc.Class({
     },
 
     onClickCancel(){
+        this.cancelCallback()
         this.node.removeFromParent()
     },
 
     onClickOK(){
         if(this.btnOK.interactable){
-            this.callback(Number(this.labelRoomNumber.string))
+            this.okCallback(Number(this.labelRoomNumber.string))
             this.node.removeFromParent()
         }
     },
@@ -121,9 +126,9 @@ EnterRoomPanel.setPrefab = (enterRoomPanel_prefab)=>{
     prefab = enterRoomPanel_prefab
 }
 
-EnterRoomPanel.show = (callback, maxLength = 10)=>{
+EnterRoomPanel.show = (okCB, cancelCB = null, maxLength = 10)=>{
     let panel = cc.instantiate(prefab)
-    panel.getComponent(EnterRoomPanel).startShow(callback, maxLength)
+    panel.getComponent(EnterRoomPanel).startShow(okCB, cancelCB, maxLength)
     return panel
 }
 

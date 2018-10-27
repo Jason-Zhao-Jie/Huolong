@@ -155,7 +155,11 @@ export default class SocketService{
     
     [$onerror](event){
         if(this[$errorCallback]!=null){
-            this[$errorCallback](event.eventPhase, event.srcElement.readyState);
+            let readyState = null
+            if(event.srcElement){
+                readyState = event.srcElement.readyState
+            }
+            this[$errorCallback](event.eventPhase, readyState);
         }
     }
     

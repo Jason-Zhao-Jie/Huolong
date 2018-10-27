@@ -129,8 +129,12 @@ let StartScene = cc.Class({
     },
 
     onClickJoinRoom () {
-        this.node.addChild(EnterRoomPanel.show(()=>{
+        this.startMenu.node.active = false
+        this.node.addChild(EnterRoomPanel.show((roomNumber)=>{
             TipBar.show('联网对战服务器正在建设中, 敬请期待')
+            this.startMenu.node.active = true
+        }, ()=>{
+            this.startMenu.node.active = true
         }))
     },
 
@@ -139,7 +143,10 @@ let StartScene = cc.Class({
     },
 
     onClickSetting () {
-        this.node.addChild(SettingPanel.show())
+        this.startMenu.node.active = false
+        this.node.addChild(SettingPanel.show(()=>{
+            this.startMenu.node.active = true
+        }))
     },
 
     onGameOver(gameReportResult){

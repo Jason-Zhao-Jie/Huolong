@@ -1,5 +1,6 @@
 import CONSTANTS from '../config/constants'
 import loader from '../utils/loader'
+import HallController from '../controller/hallController'
 import BattleController from '../controller/battleController'
 import Controller_Huolong from '../case_huolong/controller/controller_huolong'
 import BtnCard from './btnCard'
@@ -189,10 +190,6 @@ let MainScene = cc.Class({
             type: BattleController
         },
 
-        userCode:{
-            default:""
-        },
-
         bgmId:{
             default: 0,
         },
@@ -224,13 +221,18 @@ let MainScene = cc.Class({
             // this.bgmId = cc.audioEngine.play(this.audio_bgm, true, globalConfig.gameSettings.musicVolumn)
             
             this.resetUI()
-            this.wechatLogin()
         }
     },
 
     start () {
         if(!CC_EDITOR){
-
+            let nickName = HallController.getInstance().serviceBus.getUserNickName()
+            let avatarUrl = HallController.getInstance().serviceBus.getUserAvatarUrl()
+            if(nickName != null && avatarUrl != null){
+                this.showUserInfo(CONSTANTS.PLAYERSEAT.SELF, nickName, avatarUrl)
+            } else {
+                this.hideUserInfo(CONSTANTS.PLAYERSEAT.SELF)
+            }
         }
     },
 
@@ -255,85 +257,10 @@ let MainScene = cc.Class({
         this.viewController.reset()
     },
 
-    checkIsWechatGamePlatform(){
-        return (typeof wx) != 'undefined'
-    },
-
-    wechatLogin(){
-        if(this.checkIsWechatGamePlatform()){
-            this.hideUserInfo(CONSTANTS.PLAYERSEAT.SELF)
-            wx.login({
-                success: (code) =>{
-                    this.userCode = code
-                    wx.getUserInfo({
-                        withCredentials:false,  // 目前暂时不需要获取用户敏感信息
-                        lang:"zh_CN",
-                        success: (res)=>{
-                            if(!res.userInfo){
-                                TipBar.show("获取微信用户信息成功, 但是没有任何数据, 现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
-                                this.sendMsgToWxSharedCanvas({
-                                    command:"pleaseShowUserInfo",
-                                    reason:"getUserInfo succeed, but nothing returned"
-                                })
-                            }else
-                                this.showUserInfo(CONSTANTS.PLAYERSEAT.SELF, res.userInfo.nickName, res.userInfo.avatarUrl)
-                        },
-                        fail: (res)=>{
-                            // iOS 和 Android 对于拒绝授权的回调 errMsg 没有统一，需要做一下兼容处理
-                            if (res.errMsg.indexOf('auth deny') > -1 || 	res.errMsg.indexOf('auth denied') > -1 ) {
-                                // 处理用户拒绝授权的情况
-                                TipBar.show("拒绝授权, 将不能进行联机游戏, 如需重新允许, 请点击右上角菜单中的设置")
-                            }else{
-                                let errStr = ""
-                                for(let i=0; i<res.errMsg.length;++i){
-                                    errStr+=res.errMsg[i]+"  "
-                                }
-                                TipBar.show("授权失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
-                                this.sendMsgToWxSharedCanvas({
-                                    command:"pleaseShowUserInfo",
-                                    reason:"getUserInfo failed, because of the program is in developing"
-                                })
-                            }
-                        },
-                        complete:()=>{
-                            this.renderWechatSharedCanvas()
-                        }
-                      }
-                    )
-                },
-                fail: (res)=> {
-                    let errStr = ""
-                    for(let i=0; i<res.errMsg.length;++i){
-                        errStr+=res.errMsg[i]+"  "
-                    }
-                    TipBar.show("微信登录失败, 错误码: "+errStr, "现在将使用非授权接口读取基本信息, 部分功能可能受到限制")
-                    this.sendMsgToWxSharedCanvas({
-                        command:"pleaseShowUserInfo",
-                        reason:"login failed"
-                    })
-                    this.renderWechatSharedCanvas()
-                },
-                complete:()=>{
-                }
-            })
-        }
-    },
-
     renderWechatSharedCanvas(){
-        if(this.checkIsWechatGamePlatform()){
-            let openDataContext = wx.getOpenDataContext()
-            let sharedCanvas = openDataContext.canvas
-            let tex = new cc.Texture2D()
-            tex.initWithElement(sharedCanvas);
-            tex.handleLoadedTexture();
+        let tex = HallController.getInstance().getWechatSharedCanvasRenderedTexture()
+        if(tex != null){
             this.info_sharedCanvasRenderer.spriteFrame = new cc.SpriteFrame(tex);
-        }
-    },
-
-    sendMsgToWxSharedCanvas(msgData){
-        if(this.checkIsWechatGamePlatform()){
-            let openDataContext = wx.getOpenDataContext()
-            openDataContext.postMessage(msgData)
         }
     },
 

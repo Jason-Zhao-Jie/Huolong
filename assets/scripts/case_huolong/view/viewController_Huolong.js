@@ -1,5 +1,5 @@
 import CONSTANTS from '../../config/constants'
-import pokerUtils from '../utils/pokerUtils'
+import pokerUtils from '../../utils/pokerUtils'
 import BtnCard from '../../view/btnCard'
 import TipBar from '../../view/tipBar'
 import Card from '../../data/card'

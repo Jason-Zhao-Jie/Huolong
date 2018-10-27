@@ -1,8 +1,20 @@
 const CONSTANTS = Object.freeze({
-  
   LABEL_COLOR:{
     GREEN: new cc.Color(18, 200, 10),
     RED: new cc.Color(240, 8, 8),
+  },
+  SEX:{
+    UNKNOWN: Symbol('unknown'),
+    MALE: Symbol('male'),
+    FEMALE: Symbol('female'),
+  },
+  WECHAT_FAILED_REASON:{
+    SUCCESSFUL: null,
+    NOT_IN_WECHAT_PLATFORM: Symbol('Not in Wechat platform'),
+    LOGIN_SUCCESSFUL_BUT_NO_DATA: Symbol('Login successful, but no data'),
+    USER_REFUSED_ACCESS: Symbol('User refused access'),
+    ACCESS_GET_FAILED: Symbol('Access get failed'),
+    LOGIN_FAILED: Symbol('Login failed'),
   },
   /** @enum {Symbol} */
   DEBUGLEVEL:{
