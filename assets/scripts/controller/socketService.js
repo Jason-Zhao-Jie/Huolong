@@ -1,3 +1,4 @@
+import ArrayUtils from '../utils/arrayUtils'
 import protoMessageCodeHelper from "../protocol/proto_message_code_helper";
 
 // 项目报错时, 执行以下替换:
@@ -5,9 +6,11 @@ import protoMessageCodeHelper from "../protocol/proto_message_code_helper";
 // 将require google-protobuf目录下的都去掉, 连同定义的变量的所有引用处
 
 let SystemProto = require("../protocol/ArmyAntMessage/System/SocketHead_pb")
+let HuolongProto = require("../protocol/ArmyAntMessage/SubApps/Huolong_pb")
 
 let $socket = Symbol("@socket")
 let $conversationIndex = Symbol("@conversationIndex")
+let $conversationWaitingList = Symbol("@conversationWaitingList")
 let $isBigEnding = Symbol("@isBigEnding")
 
 let $onopen = Symbol("@onopen")
@@ -26,6 +29,9 @@ let $createHead = Symbol("@createHead")
 let $createExtend = Symbol("@createExtend")
 let $getHeadFrom = Symbol("@getHeadFrom")
 let $getExtendFrom = Symbol("@getExtendFrom")
+let $startWaiting = Symbol("@startWaiting")
+let $endWaiting = Symbol("@endWaiting")
+let $checkWaiting = Symbol("@checkWaiting")
 
 let serials = 0
 let MessageType = {
@@ -36,9 +42,14 @@ let MessageType = {
 let extend_version = 1
 let app_id = 1010
 
-let messageList = {
-
-}
+let messageList = [
+    HuolongProto.SM2C_HuolongLoginResponse,
+    HuolongProto.SM2C_HuolongLogoutResponse,
+    HuolongProto.SM2C_HuolongCreateTableResponse,
+    HuolongProto.SM2C_HuolongEnterTableResponse,
+    HuolongProto.SM2C_HuolongNoticeRoomInfo,
+    HuolongProto.SM2C_HuolongNoticeGameStart,
+]
 
 export default class SocketService{
     /** @param {function(boolean, string)} openedCallback */
@@ -47,6 +58,7 @@ export default class SocketService{
     /** @param {function(number, number)} errorCallback */
     constructor(openedCallback=null, closedCallback=null, receivedCallback=null, errorCallback=null){
         this[$socket] = null
+        this[$conversationWaitingList] = []
         this[$isBigEnding] = this[$checkIsBigEnding]()
         this[$openedCallback] = openedCallback
         this[$closedCallback] = closedCallback
@@ -56,6 +68,10 @@ export default class SocketService{
 
     isBigEnding(){
         return this.isBigEnding
+    }
+
+    isWaiting(){
+        return this[$conversationWaitingList].length != 0
     }
 
     getMessageByDisplayName(displayName){
@@ -92,7 +108,7 @@ export default class SocketService{
     }
 
     send(message, stepIndex = 0, stepType = SystemProto.ConversationStepType.ASKFOR){
-        if(this[$socket] != null)
+        if(this[$socket] == null)
             return false
         if(!message || !message.serializeBinary)
             return false
@@ -100,7 +116,30 @@ export default class SocketService{
         let arr_extend = this[$createExtend](bytes_msg.length, protoMessageCodeHelper.toMsgCode(message), stepIndex, stepType)
         let arr_head = this[$createHead](serials, MessageType.Normal, extend_version, arr_extend.length)
         let data = Uint8Array.from(arr_head.concat(arr_extend, Array.prototype.slice.call(bytes_msg)))
-        this[$socket].send(data)
+        let indexCheck = true
+        switch(stepType){
+            case SystemProto.ConversationStepType.ASKFOR:
+            case SystemProto.ConversationStepType.STARTCONVERSATION:
+                indexCheck = this[$startWaiting](this[$conversationIndex])
+                break
+            case SystemProto.ConversationStepType.CONVERSATIONSTEPON:
+                indexCheck = this[$checkWaiting](this[$conversationIndex])
+                break
+            case SystemProto.ConversationStepType.RESPONSEEND:
+                indexCheck = this[$endWaiting](this[$conversationIndex])
+                break
+            case SystemProto.ConversationStepType.NOTICEONLY:
+                indexCheck = !this[$endWaiting](this[$conversationIndex])
+                break
+            case SystemProto.ConversationStepType.DEFAULT:
+                indexCheck = false
+                break
+        }
+        if(indexCheck){
+            this[$socket].send(data)
+        }else{
+            cc.error("Error message index in sending")
+        }
     }
 
     [$onopen](event){
@@ -129,21 +168,46 @@ export default class SocketService{
                     // TODO : appid is incorrect
                     cc.warn("The appid of the received message is incorrect !")
                 }
-                // Get content
-                let dataBuffer = new ArrayBuffer(extend.getContentLength())
-                let data_arr8 = new Uint8Array(dataBuffer);
-                for(let i=16+head.extendLength; i<16+head.extendLength+extend.getContentLength(); ++i){
-                    data_arr8[i-16-head.extendLength] = uint8arr[i];
+                // conversation step type and index
+                let indexCheck = true
+                // let cstepIndex = extend.getConversationStepIndex()
+                switch(extend.getConversationStepType()){
+                    case SystemProto.ConversationStepType.ASKFOR:
+                    case SystemProto.ConversationStepType.STARTCONVERSATION:
+                        indexCheck = this[$startWaiting](this[$conversationIndex])
+                        break
+                    case SystemProto.ConversationStepType.CONVERSATIONSTEPON:
+                        indexCheck = this[$checkWaiting](this[$conversationIndex])
+                        break
+                    case SystemProto.ConversationStepType.RESPONSEEND:
+                        indexCheck = this[$endWaiting](this[$conversationIndex])
+                        break
+                    case SystemProto.ConversationStepType.NOTICEONLY:
+                        indexCheck = !this[$endWaiting](this[$conversationIndex])
+                        break
+                    case SystemProto.ConversationStepType.DEFAULT:
+                        indexCheck = false
+                        break
                 }
-                let messageBytes = Array.prototype.slice.call(data_arr8)
-                let messageDisplayName= protoMessageCodeHelper.toDisplayName(extend.getMessageCode())
-                let messageType = this.getMessageByDisplayName(messageDisplayName)
-                if(messageType != null){
-                    let message = messageType.deserializeBinary(messageBytes)
-                    this[$receivedCallback](extend.getMessageCode(), message, extend.getConversationStepIndex(), extend.getConversationStepType())
+                if(!indexCheck){
+                    cc.warn("Error message conversation code in receiving")
                 }else{
-                    // TODO : parse to message failed
-                    cc.warn("Received an unknown message, code: " + extend.getMessageCode() + ", displayName: " + messageDisplayName)
+                    // Get content
+                    let dataBuffer = new ArrayBuffer(extend.getContentLength())
+                    let data_arr8 = new Uint8Array(dataBuffer);
+                    for(let i=16+head.extendLength; i<16+head.extendLength+extend.getContentLength(); ++i){
+                        data_arr8[i-16-head.extendLength] = uint8arr[i];
+                    }
+                    let messageBytes = Array.prototype.slice.call(data_arr8)
+                    let messageDisplayName= protoMessageCodeHelper.toDisplayName(extend.getMessageCode())
+                    let messageType = this.getMessageByDisplayName(messageDisplayName)
+                    if(messageType != null){
+                        let message = messageType.deserializeBinary(messageBytes)
+                        this[$receivedCallback](extend.getMessageCode(), message, extend.getConversationStepIndex(), extend.getConversationStepType())
+                    }else{
+                        // TODO : parse to message failed
+                        cc.warn("Received an unknown message, code: " + extend.getMessageCode() + ", displayName: " + messageDisplayName)
+                    }
                 }
             }else{
                 // TODO : parse failed
@@ -165,6 +229,7 @@ export default class SocketService{
     
     [$onclose](event){
         this[$socket] = null
+        this[$conversationWaitingList] = []
         if(this[$closedCallback]!=null){
             this[$closedCallback](event.returnValue, event.reason, event.code);
         }
@@ -182,8 +247,8 @@ export default class SocketService{
     [$parseStringToBinaryArray](binstr){
         let ret = new ArrayBuffer(binstr.length); // 2 bytes for each char
         let bufView = new Uint8Array(ret);
-        for (var i=0, strLen=str.length; i<strLen; i++) {
-            bufView[i] = str.charCodeAt(i);
+        for (var i=0, strLen=binstr.length; i<strLen; i++) {
+            bufView[i] = binstr.charCodeAt(i);
         }
         return ret
     }
@@ -255,5 +320,27 @@ export default class SocketService{
                 return SystemProto.SocketExtendNormal_V0_0_0_1.deserializeBinary(Array.prototype.slice.call(extend_arr8))
         }
         return null
+    }
+
+    [$startWaiting](index){
+        let ret = ArrayUtils.find(this[$conversationWaitingList], index)
+        if(ret != null){
+            return false
+        }
+        this[$conversationWaitingList].push(index)
+        return true
+    }
+
+    [$endWaiting](index){
+        let ret = ArrayUtils.find(this[$conversationWaitingList], index)
+        if(ret == null){
+            return false
+        }
+        this[$conversationWaitingList].splice(ret, 1)
+        return true
+    }
+
+    [$checkWaiting](index){
+        return ArrayUtils.find(this[$conversationWaitingList], index) != null
     }
 }

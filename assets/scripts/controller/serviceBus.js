@@ -45,6 +45,9 @@ export default class ServiceBus{
                         this[$localUserDataService].setWechatLoginFailure(reason)
                         break
                     case CONSTANTS.WECHAT_FAILED_REASON.NOT_IN_WECHAT_PLATFORM:
+                        // Login guest
+                        this[$localUserDataService].setGuestLogin()
+                        break
                     default:
                 }
             }
@@ -59,6 +62,10 @@ export default class ServiceBus{
 
     isConnection(){
         return this[$socketService].isConnection()
+    }
+
+    isWaiting(){
+        return this[$socketService].isWaiting()
     }
 
     setMessageListener(messageCode, callback){
@@ -80,12 +87,24 @@ export default class ServiceBus{
         return this[$wechatPlatformService].getSharedCanvasRenderedTexture()
     }
 
+    checkIsInWechatGame(){
+        return this[$wechatPlatformService].checkIsWechatGamePlatform()
+    }
+
+    getUserId(){
+        return this[$localUserDataService].userId
+    }
+
     getUserNickName(){
         return this[$localUserDataService].nickName
     }
 
     getUserAvatarUrl(){
         return this[$localUserDataService].avatarUrl
+    }
+
+    getUserLoginType(){
+        return this[$localUserDataService].loginType
     }
 
     [$onconnected](returnValue, reason, code){

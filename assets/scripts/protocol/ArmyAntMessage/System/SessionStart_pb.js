@@ -30,7 +30,7 @@ proto.ArmyAntMessage.System.C2SM_GetServerStatueRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.System.C2SM_GetServerStatueRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.System.C2SM_GetServerStatueRequest.displayName = 'proto.ArmyAntMessage.System.C2SM_GetServerStatueRequest';
 }
 
@@ -146,7 +146,7 @@ proto.ArmyAntMessage.System.SM2C_GetServerStatueResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.System.SM2C_GetServerStatueResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.System.SM2C_GetServerStatueResponse.displayName = 'proto.ArmyAntMessage.System.SM2C_GetServerStatueResponse';
 }
 

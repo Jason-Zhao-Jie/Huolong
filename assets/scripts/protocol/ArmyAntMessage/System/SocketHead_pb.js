@@ -30,7 +30,7 @@ proto.ArmyAntMessage.System.SocketExtendNormal_V0_0_0_1 = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.System.SocketExtendNormal_V0_0_0_1, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.System.SocketExtendNormal_V0_0_0_1.displayName = 'proto.ArmyAntMessage.System.SocketExtendNormal_V0_0_0_1';
 }
 

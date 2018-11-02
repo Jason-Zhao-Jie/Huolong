@@ -695,7 +695,7 @@
       }
     ],
     "_prefab": null,
-    "_id": "31NVMcUCRMn57VduA1JZo7",
+    "_id": "5a5KJhxlVOX7a3k5BE0igZ",
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
@@ -722,7 +722,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 0
+      "y": 1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1367,8 +1367,14 @@
     "prefab_tips": {
       "__uuid__": "68a19149-7de0-46be-b8b1-990ba4e38f52"
     },
+    "prefab_waitingBar": {
+      "__uuid__": "b3643b35-5cf6-45b6-9ed7-92a916c0724d"
+    },
     "prefab_settingPanel": {
       "__uuid__": "6782c0e8-d26d-48b8-a71c-ba37a524f22b"
+    },
+    "prefab_messageBox": {
+      "__uuid__": "6fba1c86-085f-41b1-a8cc-56dd9cadec28"
     },
     "prefab_enterRoomPanel": {
       "__uuid__": "1e03fe7f-3f5c-4f4a-8754-416f29ef5af3"
@@ -1399,6 +1405,7 @@
     },
     "userCode": "",
     "bgmId": 0,
-    "controller": null
+    "controller": null,
+    "globalViewController": null
   }
 ]

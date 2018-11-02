@@ -1,12 +1,15 @@
 let SubApps = require('../protocol/ArmyAntMessage/SubApps/Huolong_pb')
 import ServiceBus from './serviceBus'
 
+let instance = null
+
 let $serviceBus = Symbol("serviceBus")
 
-export default class MessageSender {
+class MessageSender {
     /** @param { ServiceBus } serviceBus */
     constructor(serviceBus){
         this[$serviceBus] = serviceBus
+        instance = this
     }
 
     sendLogin(type, userId, userPassword, accountAuth, autoLoginAuth){
@@ -37,3 +40,9 @@ export default class MessageSender {
         this[$serviceBus].sendMessage(msg)
     }
 }
+
+MessageSender.getInstance = ()=>{
+    return instance
+}
+
+export default MessageSender

@@ -38,7 +38,7 @@ proto.ArmyAntMessage.SubApps.C2SM_EchoLoginRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_EchoLoginRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_EchoLoginRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_EchoLoginRequest';
 }
 
@@ -180,7 +180,7 @@ proto.ArmyAntMessage.SubApps.SM2C_EchoLoginResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_EchoLoginResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_EchoLoginResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_EchoLoginResponse';
 }
 
@@ -349,7 +349,7 @@ proto.ArmyAntMessage.SubApps.C2SM_EchoLogoutRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_EchoLogoutRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_EchoLogoutRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_EchoLogoutRequest';
 }
 
@@ -491,7 +491,7 @@ proto.ArmyAntMessage.SubApps.SM2C_EchoLogoutResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_EchoLogoutResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_EchoLogoutResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_EchoLogoutResponse';
 }
 
@@ -660,7 +660,7 @@ proto.ArmyAntMessage.SubApps.C2SM_EchoSendRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_EchoSendRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_EchoSendRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_EchoSendRequest';
 }
 
@@ -829,7 +829,7 @@ proto.ArmyAntMessage.SubApps.SM2C_EchoSendResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_EchoSendResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_EchoSendResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_EchoSendResponse';
 }
 
@@ -1042,7 +1042,7 @@ proto.ArmyAntMessage.SubApps.C2SM_EchoBroadcastRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_EchoBroadcastRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_EchoBroadcastRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_EchoBroadcastRequest';
 }
 
@@ -1184,7 +1184,7 @@ proto.ArmyAntMessage.SubApps.SM2C_EchoBroadcastResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_EchoBroadcastResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_EchoBroadcastResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_EchoBroadcastResponse';
 }
 
@@ -1397,7 +1397,7 @@ proto.ArmyAntMessage.SubApps.SM2C_EchoReceiveNotice = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_EchoReceiveNotice, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_EchoReceiveNotice.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_EchoReceiveNotice';
 }
 
@@ -1595,7 +1595,7 @@ proto.ArmyAntMessage.SubApps.SM2C_EchoError = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_EchoError, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_EchoError.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_EchoError';
 }
 

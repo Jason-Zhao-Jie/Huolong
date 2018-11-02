@@ -13,12 +13,14 @@ var global = Function('return this')();
 
 var ArmyAntMessage_Common_base_pb = require('../../ArmyAntMessage/Common/base_pb.js');
 goog.object.extend(proto, ArmyAntMessage_Common_base_pb);
+goog.exportSymbol('proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.C2SM_HuolongCreateTableRequest', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.C2SM_HuolongEnterTableRequest', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.C2SM_HuolongLoginRequest', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.HuolongGameType', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.HuolongStatus', null, global);
+goog.exportSymbol('proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse', null, global);
 goog.exportSymbol('proto.ArmyAntMessage.SubApps.SM2C_HuolongLoginResponse', null, global);
@@ -42,7 +44,7 @@ proto.ArmyAntMessage.SubApps.C2SM_HuolongLoginRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_HuolongLoginRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_HuolongLoginRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_HuolongLoginRequest';
 }
 
@@ -292,7 +294,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongLoginResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongLoginResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_HuolongLoginResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongLoginResponse';
 }
 
@@ -515,7 +517,7 @@ proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_HuolongLogoutRequest';
 }
 
@@ -657,7 +659,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongLogoutResponse = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongLogoutResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_HuolongLogoutResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongLogoutResponse';
 }
 
@@ -826,7 +828,7 @@ proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.displayName = 'proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo';
 }
 
@@ -1018,11 +1020,376 @@ proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.prototype.setAvatarUrl = funct
  * @extends {jspb.Message}
  * @constructor
  */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest, jspb.Message);
+  {
+  proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    userUid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    nickName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    avatarUrl: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest;
+  return proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUserUid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNickName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatarUrl(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUserUid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getNickName();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getAvatarUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string user_uid = 1;
+ * @return {string}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.getUserUid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.setUserUid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string nick_name = 2;
+ * @return {string}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.getNickName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.setNickName = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string avatar_url = 3;
+ * @return {string}
+ */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.getAvatarUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.ArmyAntMessage.SubApps.C2SM_HuolongChangeUserInfoRequest.prototype.setAvatarUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse, jspb.Message);
+  {
+  proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    result: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    message: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse;
+  return proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setResult(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getResult();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = message.getMessage();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 result = 1;
+ * @return {number}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.prototype.getResult = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.prototype.setResult = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional string message = 2;
+ * @return {string}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongChangeUserInfoResponse.prototype.setMessage = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.displayName = 'proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo';
 }
 
@@ -1057,10 +1424,11 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.toObject = function(includeInsta
     roomNumber: jspb.Message.getFieldWithDefault(msg, 1, 0),
     creatorUid: jspb.Message.getFieldWithDefault(msg, 2, ""),
     type: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    selfPlayer: (f = msg.getSelfPlayer()) && proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.toObject(includeInstance, f),
     nextPlayer: (f = msg.getNextPlayer()) && proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.toObject(includeInstance, f),
     friendPlayer: (f = msg.getFriendPlayer()) && proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.toObject(includeInstance, f),
     backPlayer: (f = msg.getBackPlayer()) && proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.toObject(includeInstance, f),
-    status: jspb.Message.getFieldWithDefault(msg, 7, 0)
+    status: jspb.Message.getFieldWithDefault(msg, 8, 0)
   };
 
   if (includeInstance) {
@@ -1112,19 +1480,24 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.deserializeBinaryFromReader = fu
     case 4:
       var value = new proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo;
       reader.readMessage(value,proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.deserializeBinaryFromReader);
-      msg.setNextPlayer(value);
+      msg.setSelfPlayer(value);
       break;
     case 5:
       var value = new proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo;
       reader.readMessage(value,proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.deserializeBinaryFromReader);
-      msg.setFriendPlayer(value);
+      msg.setNextPlayer(value);
       break;
     case 6:
       var value = new proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo;
       reader.readMessage(value,proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.deserializeBinaryFromReader);
-      msg.setBackPlayer(value);
+      msg.setFriendPlayer(value);
       break;
     case 7:
+      var value = new proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo;
+      reader.readMessage(value,proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.deserializeBinaryFromReader);
+      msg.setBackPlayer(value);
+      break;
+    case 8:
       var value = /** @type {!proto.ArmyAntMessage.SubApps.HuolongStatus} */ (reader.readEnum());
       msg.setStatus(value);
       break;
@@ -1178,7 +1551,7 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.serializeBinaryToWriter = functi
       f
     );
   }
-  f = message.getNextPlayer();
+  f = message.getSelfPlayer();
   if (f != null) {
     writer.writeMessage(
       4,
@@ -1186,7 +1559,7 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.serializeBinaryToWriter = functi
       proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.serializeBinaryToWriter
     );
   }
-  f = message.getFriendPlayer();
+  f = message.getNextPlayer();
   if (f != null) {
     writer.writeMessage(
       5,
@@ -1194,7 +1567,7 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.serializeBinaryToWriter = functi
       proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.serializeBinaryToWriter
     );
   }
-  f = message.getBackPlayer();
+  f = message.getFriendPlayer();
   if (f != null) {
     writer.writeMessage(
       6,
@@ -1202,10 +1575,18 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.serializeBinaryToWriter = functi
       proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.serializeBinaryToWriter
     );
   }
+  f = message.getBackPlayer();
+  if (f != null) {
+    writer.writeMessage(
+      7,
+      f,
+      proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo.serializeBinaryToWriter
+    );
+  }
   f = message.getStatus();
   if (f !== 0.0) {
     writer.writeEnum(
-      7,
+      8,
       f
     );
   }
@@ -1258,18 +1639,48 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setType = function(val
 
 
 /**
- * optional ST_HuolongPlayerInfo next_player = 4;
+ * optional ST_HuolongPlayerInfo self_player = 4;
  * @return {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo}
  */
-proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.getNextPlayer = function() {
+proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.getSelfPlayer = function() {
   return /** @type{?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo} */ (
     jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, 4));
 };
 
 
 /** @param {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo|undefined} value */
-proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setNextPlayer = function(value) {
+proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setSelfPlayer = function(value) {
   jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.clearSelfPlayer = function() {
+  this.setSelfPlayer(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.hasSelfPlayer = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional ST_HuolongPlayerInfo next_player = 5;
+ * @return {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo}
+ */
+proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.getNextPlayer = function() {
+  return /** @type{?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo} */ (
+    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, 5));
+};
+
+
+/** @param {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo|undefined} value */
+proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setNextPlayer = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
 };
 
 
@@ -1283,23 +1694,23 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.clearNextPlayer = func
  * @return {boolean}
  */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.hasNextPlayer = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
 /**
- * optional ST_HuolongPlayerInfo friend_player = 5;
+ * optional ST_HuolongPlayerInfo friend_player = 6;
  * @return {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo}
  */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.getFriendPlayer = function() {
   return /** @type{?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo} */ (
-    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, 5));
+    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, 6));
 };
 
 
 /** @param {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo|undefined} value */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setFriendPlayer = function(value) {
-  jspb.Message.setWrapperField(this, 5, value);
+  jspb.Message.setWrapperField(this, 6, value);
 };
 
 
@@ -1313,23 +1724,23 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.clearFriendPlayer = fu
  * @return {boolean}
  */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.hasFriendPlayer = function() {
-  return jspb.Message.getField(this, 5) != null;
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
 /**
- * optional ST_HuolongPlayerInfo back_player = 6;
+ * optional ST_HuolongPlayerInfo back_player = 7;
  * @return {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo}
  */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.getBackPlayer = function() {
   return /** @type{?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo} */ (
-    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, 6));
+    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo, 7));
 };
 
 
 /** @param {?proto.ArmyAntMessage.SubApps.ST_HuolongPlayerInfo|undefined} value */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setBackPlayer = function(value) {
-  jspb.Message.setWrapperField(this, 6, value);
+  jspb.Message.setWrapperField(this, 7, value);
 };
 
 
@@ -1343,22 +1754,22 @@ proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.clearBackPlayer = func
  * @return {boolean}
  */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.hasBackPlayer = function() {
-  return jspb.Message.getField(this, 6) != null;
+  return jspb.Message.getField(this, 7) != null;
 };
 
 
 /**
- * optional HuolongStatus status = 7;
+ * optional HuolongStatus status = 8;
  * @return {!proto.ArmyAntMessage.SubApps.HuolongStatus}
  */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.getStatus = function() {
-  return /** @type {!proto.ArmyAntMessage.SubApps.HuolongStatus} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+  return /** @type {!proto.ArmyAntMessage.SubApps.HuolongStatus} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
 
 /** @param {!proto.ArmyAntMessage.SubApps.HuolongStatus} value */
 proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.prototype.setStatus = function(value) {
-  jspb.Message.setProto3EnumField(this, 7, value);
+  jspb.Message.setProto3EnumField(this, 8, value);
 };
 
 
@@ -1377,7 +1788,7 @@ proto.ArmyAntMessage.SubApps.C2SM_HuolongCreateTableRequest = function(opt_data)
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_HuolongCreateTableRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_HuolongCreateTableRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_HuolongCreateTableRequest';
 }
 
@@ -1519,7 +1930,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse = function(opt_data
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse';
 }
 
@@ -1552,6 +1963,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.toObject 
 proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     result: jspb.Message.getFieldWithDefault(msg, 1, false),
+    message: jspb.Message.getFieldWithDefault(msg, 2, ""),
     roomInfo: (f = msg.getRoomInfo()) && proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.toObject(includeInstance, f)
   };
 
@@ -1594,6 +2006,10 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.deserializeBinaryFr
       msg.setResult(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
+    case 3:
       var value = new proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo;
       reader.readMessage(value,proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.deserializeBinaryFromReader);
       msg.setRoomInfo(value);
@@ -1634,10 +2050,17 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.serializeBinaryToWr
       f
     );
   }
+  f = message.getMessage();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
   f = message.getRoomInfo();
   if (f != null) {
     writer.writeMessage(
-      2,
+      3,
       f,
       proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.serializeBinaryToWriter
     );
@@ -1663,18 +2086,33 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.setResult
 
 
 /**
- * optional ST_HuolongRoomInfo room_info = 2;
+ * optional string message = 2;
+ * @return {string}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.setMessage = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional ST_HuolongRoomInfo room_info = 3;
  * @return {?proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo}
  */
 proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.getRoomInfo = function() {
   return /** @type{?proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo} */ (
-    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo, 2));
+    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo, 3));
 };
 
 
 /** @param {?proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo|undefined} value */
 proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.setRoomInfo = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -1688,7 +2126,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.clearRoom
  * @return {boolean}
  */
 proto.ArmyAntMessage.SubApps.SM2C_HuolongCreateTableResponse.prototype.hasRoomInfo = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
@@ -1707,7 +2145,7 @@ proto.ArmyAntMessage.SubApps.C2SM_HuolongEnterTableRequest = function(opt_data) 
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.C2SM_HuolongEnterTableRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.C2SM_HuolongEnterTableRequest.displayName = 'proto.ArmyAntMessage.SubApps.C2SM_HuolongEnterTableRequest';
 }
 
@@ -1849,7 +2287,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse = function(opt_data)
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse';
 }
 
@@ -1882,6 +2320,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.toObject =
 proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     result: jspb.Message.getFieldWithDefault(msg, 1, false),
+    message: jspb.Message.getFieldWithDefault(msg, 2, ""),
     roomInfo: (f = msg.getRoomInfo()) && proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.toObject(includeInstance, f)
   };
 
@@ -1924,6 +2363,10 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.deserializeBinaryFro
       msg.setResult(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMessage(value);
+      break;
+    case 3:
       var value = new proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo;
       reader.readMessage(value,proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.deserializeBinaryFromReader);
       msg.setRoomInfo(value);
@@ -1964,10 +2407,17 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.serializeBinaryToWri
       f
     );
   }
+  f = message.getMessage();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
   f = message.getRoomInfo();
   if (f != null) {
     writer.writeMessage(
-      2,
+      3,
       f,
       proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo.serializeBinaryToWriter
     );
@@ -1993,18 +2443,33 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.setResult 
 
 
 /**
- * optional ST_HuolongRoomInfo room_info = 2;
+ * optional string message = 2;
+ * @return {string}
+ */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.getMessage = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.setMessage = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional ST_HuolongRoomInfo room_info = 3;
  * @return {?proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo}
  */
 proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.getRoomInfo = function() {
   return /** @type{?proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo} */ (
-    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo, 2));
+    jspb.Message.getWrapperField(this, proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo, 3));
 };
 
 
 /** @param {?proto.ArmyAntMessage.SubApps.ST_HuolongRoomInfo|undefined} value */
 proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.setRoomInfo = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
+  jspb.Message.setWrapperField(this, 3, value);
 };
 
 
@@ -2018,7 +2483,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.clearRoomI
  * @return {boolean}
  */
 proto.ArmyAntMessage.SubApps.SM2C_HuolongEnterTableResponse.prototype.hasRoomInfo = function() {
-  return jspb.Message.getField(this, 2) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
@@ -2037,7 +2502,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeRoomInfo = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeRoomInfo, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeRoomInfo.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeRoomInfo';
 }
 
@@ -2196,7 +2661,7 @@ proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeGameStart = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
 goog.inherits(proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeGameStart, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
+  {
   proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeGameStart.displayName = 'proto.ArmyAntMessage.SubApps.SM2C_HuolongNoticeGameStart';
 }
 
