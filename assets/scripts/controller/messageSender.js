@@ -39,10 +39,10 @@ class MessageSender {
         msg.setRoomNumber(roomNumber)
         this[$serviceBus].sendMessage(msg)
     }
-}
 
-MessageSender.getInstance = ()=>{
-    return instance
+    static getInstance = ()=>{
+        return instance
+    }
 }
 
 export default MessageSender

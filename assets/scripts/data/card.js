@@ -62,32 +62,31 @@ class Card {
     return this.id
   }
 
-}
-
-Card.getColor = (id)=>{
-  let color =  Math.floor(id / 100) % 10
-  switch(color){
-    case 1:
-      return Constants.CARDCOLOR.SPADES
-    case 2:
-      return Constants.CARDCOLOR.HEART
-    case 3:
-      return Constants.CARDCOLOR.CUBE
-    case 4:
-      return Constants.CARDCOLOR.DIAMOND
-    case 5:
-      return Constants.CARDCOLOR.JOKER
-    default:
-      return 0
+  static getColor = (id)=>{
+    let color =  Math.floor(id / 100) % 10
+    switch(color){
+      case 1:
+        return Constants.CARDCOLOR.SPADES
+      case 2:
+        return Constants.CARDCOLOR.HEART
+      case 3:
+        return Constants.CARDCOLOR.CUBE
+      case 4:
+        return Constants.CARDCOLOR.DIAMOND
+      case 5:
+        return Constants.CARDCOLOR.JOKER
+      default:
+        return 0
+    }
   }
-}
-
-Card.getGroup = (id)=>{
-  return Math.floor(id / 1000)
-}
-
-Card.getValue = (id)=>{
-  return id % 100
+  
+  static getGroup = (id)=>{
+    return Math.floor(id / 1000)
+  }
+  
+  static getValue = (id)=>{
+    return id % 100
+  }
 }
 
 export default Card

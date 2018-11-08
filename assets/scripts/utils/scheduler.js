@@ -114,10 +114,10 @@ class Scheduler {
         this.callFunc((nd - this._lastTime)/1000)
         this._lastTime = nd
     }
-}
-
-Scheduler.callAfterDelay = function(func, dt){
-    return setTimeout(func, dt * 1000)
+    
+    static callAfterDelay = function(func, dt){
+        return setTimeout(func, dt * 1000)
+    }
 }
 
 export default Scheduler

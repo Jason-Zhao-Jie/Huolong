@@ -67,12 +67,12 @@ class GlobalViewController {
             })
         })
     }
-}
-
-GlobalViewController.getInstance = ()=>{
-    if(instance == null)
-        instance = new GlobalViewController()
-    return instance
+    
+    static getInstance = ()=>{
+        if(instance == null)
+            instance = new GlobalViewController()
+        return instance
+    }
 }
 
 export default GlobalViewController

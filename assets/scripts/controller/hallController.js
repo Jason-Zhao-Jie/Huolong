@@ -46,6 +46,13 @@ class HallController {
         this.messageSender.sendEnterTable(roomNumber)
     }
 
+    static getInstance = ()=>{
+        if (instance == null){
+            instance= new HallController()
+        }
+        return instance
+    }
+
     // private member functions
     [$onSocketDisconnected](){
         cc.log("Websocket connection Lost !")
@@ -56,13 +63,6 @@ class HallController {
             this.serviceBus.connect(successCB, failedCB)
         })
     }
-}
-
-HallController.getInstance = ()=>{
-    if (instance == null){
-        instance= new HallController()
-    }
-    return instance
 }
 
 export default HallController
