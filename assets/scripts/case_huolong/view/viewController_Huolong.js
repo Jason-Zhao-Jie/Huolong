@@ -165,7 +165,7 @@ export default class ViewController_Huolong{
             }
             cards[i].x = 30 * (lineCurrCount/2-lineIndex)
             cards[i].y = 60 * lineNumber - 50 + (cards[i].getComponent(BtnCard).clicked?25:0)
-            cards[i].setLocalZOrder(lineCurrCount - lineIndex+10+(lineCount - lineNumber)*MAX_LINE_CARDS)
+            cards[i].zIndex = lineCurrCount - lineIndex+10+(lineCount - lineNumber)*MAX_LINE_CARDS
         }
         return cards
     }

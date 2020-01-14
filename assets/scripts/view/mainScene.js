@@ -22,7 +22,7 @@ let MainScene = cc.Class({
         },
         audio_bgm:{
             default:null,
-            url: cc.AudioClip,
+            type: cc.AudioClip,
         },
         infoUI: {
             default: null,

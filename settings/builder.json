@@ -37,5 +37,25 @@
     "subContext": "wechatOpenDataProject"
   },
   "xxteaKey": "5cb71cd1-59b4-4a",
-  "zipCompressJs": true
+  "zipCompressJs": true,
+  "android": {
+    "packageName": "org.cocos2d.NewProject"
+  },
+  "ios": {
+    "packageName": "org.cocos2d.NewProject"
+  },
+  "mac": {
+    "packageName": "org.cocos2d.NewProject"
+  },
+  "win32": {},
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "host": "",
+    "packageName": "org.cocos2d.NewProject",
+    "pathPattern": "",
+    "recordPath": "",
+    "scheme": "https",
+    "skipRecord": false
+  },
+  "appBundle": false
 }

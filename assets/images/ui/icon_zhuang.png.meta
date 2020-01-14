@@ -1,13 +1,16 @@
 {
-  "ver": "2.2.0",
+  "ver": "2.3.3",
   "uuid": "314a3029-0373-43ea-957e-f8a8aeba5a69",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
   "subMetas": {
     "icon_zhuang": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "98b0da88-886f-4eb1-89ad-75f2181e47bf",
       "rawTextureUuid": "314a3029-0373-43ea-957e-f8a8aeba5a69",
       "trimType": "auto",

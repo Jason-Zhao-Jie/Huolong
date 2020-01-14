@@ -1,13 +1,16 @@
 {
-  "ver": "2.2.0",
+  "ver": "2.3.3",
   "uuid": "1d7e82bf-44ad-498e-a226-c17857d22ce6",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "platformSettings": {},
   "subMetas": {
     "joker1": {
-      "ver": "1.0.3",
+      "ver": "1.0.4",
       "uuid": "0e5374a6-7a6f-4a88-955b-f25726c04eea",
       "rawTextureUuid": "1d7e82bf-44ad-498e-a226-c17857d22ce6",
       "trimType": "auto",

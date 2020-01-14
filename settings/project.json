@@ -35,7 +35,10 @@
     "Chipmunk",
     "Camera",
     "Intersection",
-    "Native NetWork"
+    "Native NetWork",
+    "Geom Utils",
+    "3D",
+    "3D Primitive"
   ],
   "fit-height": true,
   "fit-width": true,
@@ -60,5 +63,6 @@
     "audience": {
       "enable": false
     }
-  }
+  },
+  "assets-sort-type": "name"
 }
