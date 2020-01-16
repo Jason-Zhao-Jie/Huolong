@@ -102,7 +102,7 @@ export default class PlayerController_Network extends IPlayerController{
         super.onGameStart()
     }
 
-    onGetACard(cards){
+    onGetACard(card){
         let shows = this.checkCanShow()
         if(shows > 0){
             this.controller.pushEvent(this.seat, CONSTANTS.PLAYERWORK.SHOWSTAR, shows)
@@ -132,7 +132,7 @@ export default class PlayerController_Network extends IPlayerController{
             let mainCount = cardLayout.getMainCount()
             let othersMinUsed = this.getMinUsedMain()
             let mainSingleCards = cardLayout.getSingles(CONSTANTS.CARDCOLOR.MAIN)
-            if(mainCount > 0 && mainCount / 1.4 > calc_huolong.totalMains(this.controller.getGroupNum()) / 4 + othersMinUsed){
+            if(mainCount > 0 && mainCount / 1.4 > calc_huolong.totalMains(this.controller.modal.getCurValue(), this.controller.getGroupNum()) / 4 + othersMinUsed){
                 // TODO : 后续优化电脑与电脑的交互时, 应该令调主电脑通知对家电脑配合, 或者由电脑判断对家是否在调主
                 // 主多出平均主数量40%以上(3副牌为22张起), 大调主
                 // 先发四条流星
@@ -152,7 +152,7 @@ export default class PlayerController_Network extends IPlayerController{
                     threwCards = [cards[cards.length-1]]
                 }else
                     threwCards = findRes[findRes.length-1]
-            }else if(mainCount > 0 && mainCount / 1.2 > calc_huolong.totalMains(this.controller.getGroupNum()) / 4 + othersMinUsed){
+            }else if(mainCount > 0 && mainCount / 1.2 > calc_huolong.totalMains(this.controller.modal.getCurValue(), this.controller.getGroupNum()) / 4 + othersMinUsed){
                 // 主多出平均主数量20%以上(3副牌为19张起), 小调主
                 if(mainSingleCards.length > 0)
                     threwCards[0] = mainSingleCards[0]

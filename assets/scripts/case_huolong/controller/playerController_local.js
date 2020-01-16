@@ -18,8 +18,8 @@ export default class PlayerController_Local extends IPlayerController{
         this.controller.pushEvent(this.seat, CONSTANTS.PLAYERWORK.ROUNDREADY)
     }
 
-    onGetACard(cards){
-        this.controller.noticeViewGiveCard(cards, this.checkCanShow())
+    onGetACard(card){
+        this.controller.noticeViewGiveCard(card, this.checkCanShow())
     }
 
     onOverGetCards(canShow){

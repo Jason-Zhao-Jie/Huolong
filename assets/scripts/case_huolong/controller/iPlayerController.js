@@ -1,8 +1,13 @@
 import CONSTANTS from '../../config/constants'
 import Scheduler from '../../utils/scheduler'
 import globalConfig from '../../config/globalConfig'
+import CardLayoutData from '../../data/cardLayoutData'
+import Controller_Huolong from './controller_huolong'
 
 export default class IPlayerController{
+    /**
+     * @param {Controller_Huolong} controller
+     */
     constructor(controller){
         this.controller = controller
         this.scheduler = new Scheduler()
@@ -19,6 +24,9 @@ export default class IPlayerController{
         return CONSTANTS.PLAYERTYPE.DEFALUT
     }
 
+    /**
+     * @returns {CardLayoutData}
+     */
     getCardLayoutData(){
         return this.controller.modal.getPlayerCardData(this.seat)
     }
@@ -82,7 +90,7 @@ export default class IPlayerController{
         this.controller.pushEvent(this.seat, CONSTANTS.PLAYERWORK.ROUNDREADY)
     }
 
-    onGetACard(cards){
+    onGetACard(card){
         let shows = this.checkCanShow()
         if(shows > 0){
             this.controller.pushEvent(this.seat, CONSTANTS.PLAYERWORK.SHOWSTAR, shows)

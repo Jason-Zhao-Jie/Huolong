@@ -1,7 +1,9 @@
 import CONSTANTS from '../config/constants'
+import Card from './card'
 
 export default class CardLayoutData {
     constructor(parent){
+        /** @type {Array<Card>} */
         this.cards = []
         this.jokers = []
         this.modalParent = parent
@@ -152,7 +154,11 @@ export default class CardLayoutData {
         let sameCount = 1
         for(let i=1; i<cards.count; ++i){
             if(cards[i].getValue() == cards[i-1].getValue() && cards[i].getColor() == cards[i-1].getColor()){
-                ++sameCount
+                if(sameCount == 0 && ret.length > 0){
+                    ret[ret.length-1].push(i)
+                }else{
+                    ++sameCount
+                }
             }else{
                 if(num == 0 && sameCount > 1){
                     let elem = []
@@ -163,7 +169,7 @@ export default class CardLayoutData {
                 }
                 sameCount = 1
             }
-            if(num > 1 && sameCount == num){
+            if(num > 1 && sameCount >= num){
                 let elem = []
                 for(let k=0; k<num; ++k){
                     elem.push(cards[i-k])
@@ -241,8 +247,11 @@ export default class CardLayoutData {
         return ret
     }
 
-    // 获取指定花色中的单牌, 仅限单牌
-    // 若 withourMax 为 true , 则不包括大小王以及非主花色中的 K (打A时) 或 A (不打A时)
+    /**
+     * 获取指定花色中的单牌, 仅限单牌
+     * @param {boolean} withoutMax : 为 true , 则不包括大小王以及非主花色中的 K (打A时) 或 A (不打A时)
+     * @returns {Array<Card>}
+     */
     getSingles(color, withoutMax){
         let [cards, otherCards] = this.getCardsOfColor(color)
         let ret = []

@@ -1,6 +1,7 @@
 import CONSTANTS from '../../config/constants'
 import ArrayUtils from '../../utils/arrayUtils'
 import ModalBase from '../../data/modalBase'
+import Card from '../../data/card'
 
 export default class Modal_Huolong extends ModalBase{
     constructor(){
@@ -61,9 +62,11 @@ export default class Modal_Huolong extends ModalBase{
     getMainColor(){
         return this.gamedata.mainColor
     }
+
     setMainColor(value){
         this.gamedata.mainColor = value
     }
+
     setMainColorByShowedJoker(seat, num){
         if(num < this.roundData.currentShowedCardNum)
             return false
@@ -124,6 +127,41 @@ export default class Modal_Huolong extends ModalBase{
         else if(this.getStackCardsCount() < this.groupNum * 2)
             throw "error card number"
         return this.gainCardsFromStack(seat, 1)
+    }
+
+    getMaxOfNowRound(){
+        let a = this.roundData.currentThrews[CONSTANTS.PLAYERSEAT.SELF]
+        let b = this.roundData.currentThrews[CONSTANTS.PLAYERSEAT.BACK]
+        let c = this.roundData.currentThrews[CONSTANTS.PLAYERSEAT.FRIEND]
+        let d = this.roundData.currentThrews[CONSTANTS.PLAYERSEAT.NEXT]
+        let cards = [];
+        if(a != null){
+            cards[0] = a;
+        }
+        if(b != null){
+            cards.push(b)
+        }
+        if(c != null){
+            cards.push(c)
+        }
+        if(d != null){
+            cards.push(d)
+        }
+        switch(cards.length){
+            case 0:
+                return null;
+            case 1:
+                return cards[0];
+            case 2:
+                return this.checkCards(cards[0], cards[1], this.roundData.currentShowedCardColor);
+            case 3:
+                let ab = this.checkCards(cards[0], cards[1], this.roundData.currentShowedCardColor) ? a : b;
+                return this.checkCards(ab, cards[2], this.roundData.currentShowedCardColor);
+            case 4:
+                let abc = this.checkCards(cards[0], cards[1], this.roundData.currentShowedCardColor) ? a : b;
+                let abcd = this.checkCards(abc, cards[2], this.roundData.currentShowedCardColor);
+                return this.checkCards(abcd, cards[3], this.roundData.currentShowedCardColor);
+        }
     }
 
     giveLastCardsToZhuangPlayer(){

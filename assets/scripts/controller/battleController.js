@@ -5,6 +5,7 @@ import PlayerController_Robot from '../case_huolong/controller/playerController_
 import PlayerController_Network from '../case_huolong/controller/playerController_network'
 import Scheduler from '../utils/scheduler'
 import globalConfig from '../config/globalConfig'
+import Modal_Huolong from '../case_huolong/data/modal_huolong'
 
 export default class BattleController {
     /**
@@ -13,6 +14,7 @@ export default class BattleController {
      */
     constructor(mainscene, gameType){
         this.view = mainscene
+        /** @type {Modal_Huolong} */
         this.modal = createModal(gameType)
         this.state = CONSTANTS.GAMESTATE.START
         
@@ -177,11 +179,11 @@ export default class BattleController {
 
     pushEvent(playerSeat, event, data = null){
         this.messageQueue.push({playerSeat:playerSeat, event:event, data:data})
-        cc.log("controller收到事件: "+event.toString()+"座位:"+playerSeat.toString())
+        cc.log("controller收到事件: ", event.toString(), "座位:", playerSeat.toString())
         if(event == CONSTANTS.PLAYERWORK.THROWCARD){
             for(let i=0; i<data.length; ++i){
                 if(!data[i])
-                    cc.error("出牌数据错误: 第"+i+"张牌是空牌")
+                    cc.error("出牌数据错误: 第", i, "张牌是空牌")
             }
         }
     }

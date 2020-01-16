@@ -86,6 +86,7 @@ const CONSTANTS = Object.freeze({
     ROUNDREPORT:Symbol('roundReport'), // 一局结束, 通报结果, 需返回 ROUNDREADY 以开始下一局
     GAMEREPORT:Symbol('gameReport'), // 游戏结束, 通报结算数据
   },
+
   /** @enum {Symbol} */
   PLAYERWORK:{
     ROUNDREADY:Symbol('roundReady'), // 发送就绪确认
@@ -94,7 +95,11 @@ const CONSTANTS = Object.freeze({
     THROWLASTCARDS:Symbol('throwLastCards'), // 发送扣底牌 (包括摘星)
     THROWCARD:Symbol('throwCard'), // 出牌
   },
-  /** @enum {Symbol} */
+
+  /** 
+   * AI 行牌策略
+   * @enum {Symbol} 
+   */
   AIGETCARDSWAY:{
     MINWITHOUTSCORE:Symbol('minWithoutScore'),  // 溜牌, 排除分数, 除非只剩分数
     MINORSCOREKILL:Symbol('minOrScoreKill'),  // 尽量无分溜, 如只剩分,尝试大. 如无此花色只剩主或分,则分杀

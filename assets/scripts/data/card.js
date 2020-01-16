@@ -1,4 +1,5 @@
 import Constants from '../config/constants'
+import CONSTANTS from '../config/constants'
 
 const CARD_IMG_DIR = 'cards/'
 
@@ -62,6 +63,10 @@ class Card {
     return this.id
   }
 
+  toString(){
+    return Card.toString(this.id)
+  }
+
   static getColor = (id)=>{
     let color =  Math.floor(id / 100) % 10
     switch(color){
@@ -86,6 +91,43 @@ class Card {
   
   static getValue = (id)=>{
     return id % 100
+  }
+
+  static toString = (id)=>{
+    switch(Card.getColor(id)){
+      case CONSTANTS.CARDCOLOR.SPADES:
+        return "黑桃[" + Card.getValue(id) + "]";
+      case CONSTANTS.CARDCOLOR.HEART:
+        return "红桃[" + Card.getValue(id) + "]";
+      case CONSTANTS.CARDCOLOR.CUBE:
+        return "草花[" + Card.getValue(id) + "]";
+      case CONSTANTS.CARDCOLOR.DIAMOND:
+        return "方块[" + Card.getValue(id) + "]";
+      case CONSTANTS.CARDCOLOR.JOKER:
+        switch(Card.getValue(id)){
+          case 1:
+            return "大王";
+          case 2:
+            return "小王";
+          default:
+            return "未知王牌[" + Card.getValue(id) + "]";
+        }
+      default:
+        return "未知花色[" + Card.getValue(id) + "]";
+    }
+  }
+
+  /**
+   * 
+   * @param {Array<Card>} array 
+   * @returns {Array<string>}
+   */
+  static arrayToCCLogString(array){
+    let strArr = [];
+    for(let i in array){
+      strArr[i] = array[i].toString()
+    }
+    return strArr;
   }
 }
 

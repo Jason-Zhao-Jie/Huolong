@@ -248,7 +248,7 @@ export default class Controller_Huolong extends BattleController {
     
     onThrowCards(playerSeat, cards){
         if(this.modal.roundData.currentNeedThrowPlayer == playerSeat){
-            cc.log("出牌轮次:"+this.modal.getRoundIndex()+", 出牌者:"+playerSeat.toString()+", 出牌内容:")
+            cc.log("出牌轮次:", this.modal.getRoundIndex(), ", 出牌者:", playerSeat.toString(), ", 出牌内容:")
             for(let i=0; i<cards.length; ++i){
                 if(!cards[i])
                     cc.error("出牌数据错误: 第"+i+"张牌是空牌")

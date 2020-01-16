@@ -137,7 +137,7 @@ let StartScene = cc.Class({
     onClickSimpleStart () {
         cc.director.loadScene("MainScene", ()=>{
             let canvas = cc.director.getScene().getChildByName('Canvas')
-            canvas.getComponent(MainScene).startGame(CONSTANTS.GAMETYPE.HUOLONG, CONSTANTS.PLAYERTYPE.NETWORK, {}) // TODO : player data
+            canvas.getComponent(MainScene).startGame(CONSTANTS.GAMETYPE.HUOLONG, CONSTANTS.PLAYERTYPE.AI, {}) // TODO : player data
             
         })
     },
